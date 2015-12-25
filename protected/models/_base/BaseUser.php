@@ -24,6 +24,8 @@
  * @property string $district
  * @property string $address
  * @property string $phone
+ * @property string $device_token
+ * @property string $platform
  *
  */
 abstract class BaseUser extends GxActiveRecord {
@@ -46,12 +48,12 @@ abstract class BaseUser extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('facebook_id, google_id, gender, photo, ward, province, district, phone', 'length', 'max'=>255),
+			array('facebook_id, google_id, gender, photo, ward, province, district, phone, platform', 'length', 'max'=>255),
 			array('facebook_access_token', 'length', 'max'=>500),
 			array('last_updated, email, name', 'length', 'max'=>200),
-			array('description, address', 'safe'),
-			array('facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone', 'safe', 'on'=>'search'),
+			array('description, address, device_token', 'safe'),
+			array('facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone, device_token, platform', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone, device_token, platform', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,6 +84,8 @@ abstract class BaseUser extends GxActiveRecord {
 			'district' => Yii::t('app', 'District'),
 			'address' => Yii::t('app', 'Address'),
 			'phone' => Yii::t('app', 'Phone'),
+			'device_token' => Yii::t('app', 'Device Token'),
+			'platform' => Yii::t('app', 'Platform'),
 		);
 	}
 
@@ -103,6 +107,8 @@ abstract class BaseUser extends GxActiveRecord {
 		$criteria->compare('district', $this->district, true);
 		$criteria->compare('address', $this->address, true);
 		$criteria->compare('phone', $this->phone, true);
+		$criteria->compare('device_token', $this->device_token, true);
+		$criteria->compare('platform', $this->platform, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
