@@ -43,6 +43,7 @@ class SiteController extends Controller
 				echo $error['message'];
 			else
 				$this->render('error', $error);
+                                 //   print_r ($error);
 		}
 	}
 
