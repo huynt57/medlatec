@@ -14,7 +14,7 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-         'ext.giix-components.*'
+        'ext.giix-components.*'
     //'ext.SimpleHTMLDOM',
     ),
     'modules' => array(
