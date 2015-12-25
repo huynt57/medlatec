@@ -14,7 +14,8 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        //'ext.SimpleHTMLDOM',
+         'ext.giix-components.*'
+    //'ext.SimpleHTMLDOM',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -24,8 +25,11 @@ return array(
             'password' => '1',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
+            'generatorPaths' => array(
+                'ext.giix-core',
+            )
         ),
-        //'admin',
+    //'admin',
     ),
     // application components
     'components' => array(
@@ -72,5 +76,5 @@ return array(
         'adminEmail' => 'webmaster@example.com',
     ),
     'theme' => 'classic',
-    //'params' => include (dirname(__FILE__) . '/params.php'),
+        //'params' => include (dirname(__FILE__) . '/params.php'),
 );
