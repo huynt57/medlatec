@@ -1,12 +1,12 @@
 <?php
 
-class OrderController extends Controller {
+class ResultController extends Controller {
 
     public function actionIndex() {
         $this->render('index');
     }
 
-    public function getAllOrder() {
+    public function getAllResult() {
         $columns = array(
             0 => 'id',
             1 => 'name',
