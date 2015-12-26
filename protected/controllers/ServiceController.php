@@ -1,20 +1,22 @@
 <?php
 
-class ResultController extends Controller {
+class ServiceController extends Controller {
 
     public function actionIndex() {
         $this->render('index');
     }
 
-    public function getAllResult() {
+    public function getAllService() {
         $columns = array(
             0 => 'id',
-            1 => 'patient_name',
-            2 => 'service',
-            3 => 'time',
-            4 => 'status',
-            5 => 'created_at',
-            6 => 'action',
+            1 => 'service_name',
+            2 => 'service_price',
+            3 => 'favorable',
+            4 => 'description',
+            5 => 'status',
+            6 => 'created_at',
+            7 => 'update_at',
+            8 => 'action',
         );
         $request = Yii::app()->request;
         $start = $request->getPost('start');
@@ -24,10 +26,10 @@ class ResultController extends Controller {
         $where = null;
         $criteria = new CDbCriteria;
         if (!empty($request->getParam['search']['value'])) {
-            $criteria->addSearchCondition("patient_name", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("service", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("time", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("status", $request->getParam['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("service_name", $request->getParam['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("service_price", $request->getParam['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("favorable", $request->getParam['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("description", $request->getParam['search']['value'], 'true', 'OR');
             $where = true;
         }
         $criteria->limit = $length;
@@ -38,11 +40,13 @@ class ResultController extends Controller {
         foreach ($data as $item) {
             $itemArr = array();
             $itemArr['id'] = $item->id;
-            $itemArr['patient_name'] = $item->patient_name;
-            $itemArr['service'] = $item->service;
-            $itemArr['time'] = $item->time;
+            $itemArr['service_name'] = $item->service_name;
+            $itemArr['service_price'] = $item->service_price;
+            $itemArr['favorable'] = $item->favorable;
+            $itemArr['description'] = $item->description;
             $itemArr['status'] = $item->status;
             $itemArr['created_at'] = $item->created_at;
+            $itemArr['update_at'] = $item->update_at;
             $itemArr['action'] = '';
             $returnArr[] = $itemArr;
         }
@@ -54,7 +58,7 @@ class ResultController extends Controller {
     public function actionEdit() {
         $request = Yii::app()->request;
         $order_id = StringHelper::filterString($request->getQuery('order_id'));
-        $data = ResultMedlatec::model()->findByPk($order_id);
+        $data = ServiceMedlatec::model()->findByPk($order_id);
         $this->render('edit', array('data' => $data));
     }
 
@@ -64,7 +68,7 @@ class ResultController extends Controller {
 
     public function actionAddProcess() {
         $attr = StringHelper::filterArrayString($_POST);
-        $result = ResultMedlatec::model()->addResult($attr);
+        $result = ResultMedlatec::model()->addService($attr);
         if ($result) {
             ResponseHelper::JsonReturnSuccess('', 'Update success');
         } else {
@@ -74,7 +78,7 @@ class ResultController extends Controller {
 
     public function actionEditProcess() {
         $attr = StringHelper::filterArrayString($_POST);
-        $result = ResultMedlatec::model()->updateResult($attr);
+        $result = ServiceMedlatec::model()->updateService($attr);
         if ($result) {
             ResponseHelper::JsonReturnSuccess('', 'Update success');
         } else {
