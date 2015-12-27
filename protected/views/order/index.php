@@ -53,7 +53,7 @@
                 {data: 'name', name: 'name'},
                 {data: 'phone', name: 'phone'},
                 {data: 'email', name: 'email'},
-              //  {data: 'requirement', name: 'requirement'},
+                //  {data: 'requirement', name: 'requirement'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action'},
