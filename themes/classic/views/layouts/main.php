@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>VKSND | Trang quản trị</title>
+        <title>Medlatec Meboo | Trang quản trị</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -30,6 +30,8 @@
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/daterangepicker/daterangepicker-bs3.css">
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/dataTables.bootstrap.css">
         <!-- jQuery 2.1.4 -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
@@ -93,7 +95,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="<?php echo Yii::app()->createUrl('user/logout')?>" class="btn btn-default btn-flat">Đăng xuất</a>
+                                            <a href="<?php echo Yii::app()->createUrl('user/logout') ?>" class="btn btn-default btn-flat">Đăng xuất</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -130,7 +132,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 0.0.0
                 </div>
-                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">VKSND</a>.</strong> All rights reserved.
+                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Meboo</a>.</strong> All rights reserved.
             </footer>
 
             <!-- Control Sidebar -->
@@ -334,5 +336,9 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/js/demo.js"></script>
+
+        <!-- DataTables -->
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
     </body>
 </html>

@@ -6,7 +6,7 @@ class ServiceController extends Controller {
         $this->render('index');
     }
 
-    public function getAllService() {
+    public function actionGetAllService() {
         $columns = array(
             0 => 'id',
             1 => 'service_name',
@@ -15,27 +15,27 @@ class ServiceController extends Controller {
             4 => 'description',
             5 => 'status',
             6 => 'created_at',
-            7 => 'update_at',
+            7 => 'updated_at',
             8 => 'action',
         );
-        $request = Yii::app()->request;
-        $start = $request->getPost('start');
-        $length = $request->getPost('length');
-        $column = $request->getParam['order'][0]['column'];
-        $order = $request->getParam['order'][0]['dir'];
+      //  $request = Yii::app()->request;
+        $start = $_REQUEST['start'];
+        $length = $_REQUEST['length'];
+        $column = $_REQUEST['order'][0]['column'];
+        $order = $_REQUEST['order'][0]['dir'];
         $where = null;
         $criteria = new CDbCriteria;
-        if (!empty($request->getParam['search']['value'])) {
-            $criteria->addSearchCondition("service_name", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("service_price", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("favorable", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("description", $request->getParam['search']['value'], 'true', 'OR');
+        if (!empty($_REQUEST['search']['value'])) {
+            $criteria->addSearchCondition("service_name", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("service_price", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("favorable", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("description", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $data = ResultMedlatec::model()->findAll($criteria);
+        $data = ServiceMedlatec::model()->findAll($criteria);
         $returnArr = array();
         foreach ($data as $item) {
             $itemArr = array();
@@ -46,7 +46,7 @@ class ServiceController extends Controller {
             $itemArr['description'] = $item->description;
             $itemArr['status'] = $item->status;
             $itemArr['created_at'] = $item->created_at;
-            $itemArr['update_at'] = $item->update_at;
+            $itemArr['updated_at'] = $item->updated_at;
             $itemArr['action'] = '';
             $returnArr[] = $itemArr;
         }
@@ -68,7 +68,7 @@ class ServiceController extends Controller {
 
     public function actionAddProcess() {
         $attr = StringHelper::filterArrayString($_POST);
-        $result = ResultMedlatec::model()->addService($attr);
+        $result = ServiceMedlatec::model()->addService($attr);
         if ($result) {
             ResponseHelper::JsonReturnSuccess('', 'Update success');
         } else {

@@ -6,33 +6,36 @@ class OrderController extends Controller {
         $this->render('index');
     }
 
-    public function getAllOrder() {
+    public function actionGetAllOrder() {
         $columns = array(
             0 => 'id',
             1 => 'name',
             2 => 'phone',
             3 => 'email',
             4 => 'requirement',
-            4 => 'created_at',
-            5 => 'action',
+            5 => 'created_at',
+            6 => 'status',
+            7 => 'action',
         );
-        $request = Yii::app()->request;
-        $start = $request->getPost('start');
-        $length = $request->getPost('length');
-        $column = $request->getParam['order'][0]['column'];
-        $order = $request->getParam['order'][0]['dir'];
+      //  $request = Yii::app()->request;
+        $start = $_REQUEST['start'];
+        $length = $_REQUEST['length'];
+        $column = $_REQUEST['order'][0]['column'];
+        $order = $_REQUEST['order'][0]['dir'];
         $where = null;
         $criteria = new CDbCriteria;
-        if (!empty($request->getParam['search']['value'])) {
-            $criteria->addSearchCondition("name", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("phone", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("email", $request->getParam['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("requirement", $request->getParam['search']['value'], 'true', 'OR');
+        if (!empty($_REQUEST['search']['value'])) {
+            $criteria->addSearchCondition("name", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("phone", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("email", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("requirement", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
+        //echo $order;
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
+       // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
         foreach ($data as $item) {
@@ -43,6 +46,7 @@ class OrderController extends Controller {
             $itemArr['email'] = $item->email;
             $itemArr['requirement'] = $item->requirement;
             $itemArr['created_at'] = $item->created_at;
+            $itemArr['status'] = $item->status;
             $itemArr['action'] = '';
             $returnArr[] = $itemArr;
         }

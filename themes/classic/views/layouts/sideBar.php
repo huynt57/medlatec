@@ -24,74 +24,19 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">Điều hướng chính</li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('search/index') ?>">
-                    <span>Tìm kiếm</span>
+            <li>
+                <a href="<?php echo Yii::app()->createAbsoluteUrl('order/index') ?>">
+                    <span>Quản lý đặt khám</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('documentary/index') ?>">
-                    <span>Yêu cầu tương trợ tư pháp <br>hình sự đi</span>
+            <li>
+                <a href="<?php echo Yii::app()->createAbsoluteUrl('result/index') ?>">
+                    <span>Quản lý kết quả đặt khám</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('documentaryRecieve/index') ?>">
-                    <span>Yêu cầu tương trợ tư pháp <br>hình sự đến</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('opinion/index') ?>">
-                    <span>Tham gia ý kiến</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('documentaryAbroad/index') ?>">
-                    <span>Văn bản có yếu tố nước ngoài</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('case/index') ?>">
-                    <span>Vụ án</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('letter/index') ?>">
-                    <span>Đơn thư</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('guide/index') ?>">
-                    <span>Thẩm định, hướng dẫn</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('wantedAbroad/index') ?>">
-                    <span>Truy nã nước ngoài</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('casesAbroadOther/index') ?>">
-                    <span>Vụ việc có yếu tố nước ngoài khác</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo Yii::app()->createUrl('document/index') ?>">
-                    <span>Thư viện</span>
-                </a>
-            </li>
-            <!--            <li class="active">
-                            <a href=" #">
-                                <span>Tìm kiếm</span>
-                            </a>
-                        </li>-->
-            <!--            <li class="active">
-                            <a href=" #">
-                                <span>Thống kê</span>
-                            </a>
-                        </li>-->
-            <li class="active">
-                <a href=" #">
-                    <span>Backup</span>
+            <li>
+                <a href="<?php echo Yii::app()->createAbsoluteUrl('service/index') ?>">
+                    <span>Quản lý dịch vụ</span>
                 </a>
             </li>
         </ul>
