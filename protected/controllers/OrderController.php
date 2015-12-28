@@ -66,7 +66,7 @@ class OrderController extends Controller {
         $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
         $this->layout = 'main_modal';
         $order_id = StringHelper::filterString($request->getQuery('oid'));
-        $data = OrderMedlatec::model()->findByPk($order_id);
+        $data = OrderMedlatec::model()->getOrderDetail($order_id);
         $this->render('edit', array('data' => $data));
     }
 

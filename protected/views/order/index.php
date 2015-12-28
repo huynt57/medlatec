@@ -72,3 +72,24 @@
     });
 
 </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '#edit-order-submit', function () {
+            var form = $('#form-edit-order');
+            var data = form.serialize();
+
+            $.ajax({
+                dataType: 'json',
+                url: '<?php echo Yii::app()->createUrl('order/editProcess') ?>',
+                method: 'POST',
+                data: data,
+                success: function (response)
+                {
+                    console.log('1');
+                }
+            });
+        });
+    });
+</script>
