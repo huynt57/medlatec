@@ -39,4 +39,32 @@ class Util {
         }
     }
 
+    public static function getStatus($status) {
+        $name = NULL;
+        switch ($status) {
+            case -1:
+                $name = 'Đã hủy';
+                break;
+            case 0:
+                $name = 'Đã yêu cầu';
+                break;
+            case 1:
+                $name = 'Đã xác nhận';
+                break;
+            case 2:
+                $name = 'Đã đặt';
+                break;
+            case 3:
+                $name = 'Đang đợi kết quả';
+                break;
+            case 4:
+                $name = 'Đã hoàn thành';
+                break;
+            default :
+                $name = 'Chưa xác định';
+                break;
+        }
+        return $name;
+    }
+
 }

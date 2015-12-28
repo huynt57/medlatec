@@ -2,6 +2,9 @@
 
 class OrderController extends Controller {
 
+    public $layoutPath;
+    public $layout;
+    
     public function actionIndex() {
         $this->render('index');
     }
@@ -17,7 +20,7 @@ class OrderController extends Controller {
             6 => 'status',
             7 => 'action',
         );
-      //  $request = Yii::app()->request;
+        //  $request = Yii::app()->request;
         $start = $_REQUEST['start'];
         $length = $_REQUEST['length'];
         $column = $_REQUEST['order'][0]['column'];
@@ -35,7 +38,7 @@ class OrderController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-       // var_dump($start); die;
+        // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
         foreach ($data as $item) {
@@ -47,7 +50,10 @@ class OrderController extends Controller {
             $itemArr['requirement'] = $item->requirement;
             $itemArr['created_at'] = $item->created_at;
             $itemArr['status'] = $item->status;
-            $itemArr['action'] = '';
+            $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
+            $action.='';
+            $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
 
@@ -57,7 +63,9 @@ class OrderController extends Controller {
 
     public function actionEdit() {
         $request = Yii::app()->request;
-        $order_id = StringHelper::filterString($request->getQuery('order_id'));
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_modal';
+        $order_id = StringHelper::filterString($request->getQuery('oid'));
         $data = OrderMedlatec::model()->findByPk($order_id);
         $this->render('edit', array('data' => $data));
     }

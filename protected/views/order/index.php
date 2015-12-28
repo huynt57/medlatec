@@ -39,6 +39,14 @@
         </div>
     </div>
 </section>
+<div class="modal fade" id="edit-order-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <script>
     $(document).ready(function () {
         $('#order_management').DataTable({
