@@ -8,7 +8,7 @@
         <div class="box-body">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Tên</label>
+                    <label for="name">Tên bệnh nhân</label>
                     <input type="text" class="form-control" id="name" name="name" value="<?php echo $data['name'] ?>" >
                 </div>
                 <div class="form-group">
@@ -55,7 +55,7 @@
                     <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo $data['updated_at'] ?>" >
                 </div>
 
-                <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >
+                
             </div>
 
         </div><!-- /.box-body -->
