@@ -31,8 +31,12 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="number">Trạng thái</label>
-                    <input type="text" class="form-control" id="number" name="number" >
+                    <label>Trạng thái</label>
+                    <select class="form-control">
+                        <?php foreach (Util::getStatusValue() as $key => $value): ?>
+                            <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="service_name">Dịch vụ</label>
@@ -67,3 +71,10 @@
     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Đóng</button>
     <button type="button" class="btn btn-primary" id="edit-order-submit">Lưu</button>
 </div>
+<script>
+   $(document).ready(function() {
+        $('body').on('focus', "#time_confirm", function () {
+            $(this).datepicker();
+        });
+   });
+</script>

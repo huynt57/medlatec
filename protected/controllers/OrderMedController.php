@@ -1,6 +1,6 @@
 <?php
 
-class OrderController extends Controller {
+class OrderMedController extends Controller {
 
     public $layoutPath;
     public $layout;
@@ -53,59 +53,6 @@ class OrderController extends Controller {
             $itemArr['status'] = $item->status;
             $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
             $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
-            $action.='';
-            $itemArr['action'] = $action;
-            $returnArr[] = $itemArr;
-        }
-
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
-            "recordsFiltered" => count($data)));
-    }
-
-    public function actionGetAllOrder() {
-        $columns = array(
-            0 => 'id',
-            1 => 'name',
-            2 => 'phone',
-            3 => 'email',
-            4 => 'requirement',
-            5 => 'created_at',
-            6 => 'status',
-            7 => 'action',
-        );
-        //  $request = Yii::app()->request;
-        $start = $_REQUEST['start'];
-        $length = $_REQUEST['length'];
-        $column = $_REQUEST['order'][0]['column'];
-        $order = $_REQUEST['order'][0]['dir'];
-        $where = null;
-        $criteria = new CDbCriteria;
-        if (!empty($_REQUEST['search']['value'])) {
-            $criteria->addSearchCondition("name", $_REQUEST['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("phone", $_REQUEST['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("email", $_REQUEST['search']['value'], 'true', 'OR');
-            $criteria->addSearchCondition("requirement", $_REQUEST['search']['value'], 'true', 'OR');
-            $where = true;
-        }
-        //echo $order;
-        $criteria->limit = $length;
-        $criteria->offset = $start;
-        $criteria->order = "$columns[$column] $order";
-        // var_dump($start); die;
-        $data = OrderMedlatec::model()->findAll($criteria);
-        $returnArr = array();
-        foreach ($data as $item) {
-            $itemArr = array();
-            $itemArr['id'] = $item->id;
-            $itemArr['name'] = $item->name;
-            $itemArr['phone'] = $item->phone;
-            $itemArr['email'] = $item->email;
-            $itemArr['requirement'] = $item->requirement;
-            $itemArr['created_at'] = $item->created_at;
-            $itemArr['status'] = $item->status;
-            $itemArr['status_name'] = Util::getStatusLabel($item->status);
-            $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
-            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
             $action.='';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;

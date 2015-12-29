@@ -39,6 +39,34 @@ class Util {
         }
     }
 
+    public static function getStatusLabel($status) {
+        $name = NULL;
+        switch ($status) {
+            case -1:
+                $name = '<span class="label label-danger">Đã hủy</span>';
+                break;
+            case 0:
+                $name = '<span class="label label-primary">Đã yêu cầu</span>';
+                break;
+            case 1:
+                $name = '<span class="label label-info">Đã xác nhận</span>';
+                break;
+            case 2:
+                $name = '<span class="label label-orange">Đã đặt</span>';
+                break;
+            case 3:
+                $name = '<span class="label label-teal">Đang đợi kết quả</span>';
+                break;
+            case 4:
+                $name = '<span class="label label-success">Đã hoàn thành</span>';
+                break;
+            default :
+                $name = '<span class="label label-gray">Chưa xác định</span>';
+                break;
+        }
+        return $name;
+    }
+
     public static function getStatus($status) {
         $name = NULL;
         switch ($status) {
@@ -65,6 +93,17 @@ class Util {
                 break;
         }
         return $name;
+    }
+
+    public static function getStatusValue() {
+        return array(
+            '-1' => 'Đã hủy',
+            '0' => 'Đã yêu cầu',
+            '1' => 'Đã xác nhận',
+            '2' => 'Đã đặt',
+            '3' => 'Đang đợi kết quả',
+            '4' => 'Đã hoàn thành',
+        );
     }
 
 }

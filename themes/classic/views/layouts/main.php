@@ -18,6 +18,7 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/jquery.toast.min.css">
         <!-- iCheck -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/iCheck/flat/blue.css">
         <!-- Morris chart -->
@@ -36,12 +37,29 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.toast.min.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .blur-loading::after {
+                background: rgba(255, 255, 255, 0.45) url("<?php echo Yii::app()->theme->baseUrl; ?>/assets/img/ajax-loader.gif") no-repeat scroll center center;
+                bottom: 0;
+                content: "";
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 9;
+            }
+
+            .jq-toast-wrap {
+                z-index: 7000;
+            }
+        </style>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -301,7 +319,32 @@
                  immediately after the control sidebar -->
             <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
+        <script>
+            function displayMessage(msg, type) {
+                if (type === 1) {
+                    $.toast({
+                        text: '<h5> Thành công !</h5>',
+                        showHideTransition: 'fade', // It can be plain, fade or slide
+                        bgColor: '#00A65A',
+                        allowToastClose: false, // Show the close button or not
+                        hideAfter: 3000, // `false` to make it sticky or time in miliseconds to hide after
+                        stack: 5, // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
+                        position: 'top-center'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+                    });
+                } else {
+                    $.toast({
+                        text: '<h5> Đã có lỗi không mong muốn xảy ra!</h5>',
+                        showHideTransition: 'slide', // It can be plain, fade or slide
+                        bgColor: '#DD4B39',
+                        allowToastClose: false, // Show the close button or not
+                        hideAfter: 3000, // `false` to make it sticky or time in miliseconds to hide after
+                        stack: 5, // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
 
+                        position: 'top-center'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+                    });
+                }
+            }
+        </script>
 
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
@@ -336,6 +379,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/js/demo.js"></script>
+
 
         <!-- DataTables -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>

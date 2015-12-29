@@ -41,11 +41,13 @@
 </section>
 <div class="modal fade" id="edit-order-modal">
     <div class="modal-dialog">
-        <div class="modal-content">
-            
+        <div class="modal-content" id="edit-order-modal-content">
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+
 
 <script>
     $(document).ready(function () {
@@ -63,7 +65,7 @@
                 {data: 'email', name: 'email'},
                 //  {data: 'requirement', name: 'requirement'},
                 {data: 'created_at', name: 'created_at'},
-                {data: 'status', name: 'status'},
+                {data: 'status_name', name: 'status_name'},
                 {data: 'action', name: 'action'},
 //                {data: 'created_at', name: 'created_at'},
 //                {data: 'updated_at', name: 'updated_at'}
@@ -73,23 +75,47 @@
 
 </script>
 
-
 <script type="text/javascript">
     $(document).ready(function () {
         $(document).on('click', '#edit-order-submit', function () {
             var form = $('#form-edit-order');
             var data = form.serialize();
-
             $.ajax({
+                beforeSend: function () {
+                    $('#edit-order-modal').addClass('blur-loading');
+                },
                 dataType: 'json',
                 url: '<?php echo Yii::app()->createUrl('order/editProcess') ?>',
                 method: 'POST',
                 data: data,
                 success: function (response)
                 {
-                    console.log('1');
+                    if (response.status === 1) {
+                        // Show success message
+                       displayMessage('tt', 1);
+                    } else {
+                        // Show error message
+                        
+                    }
+                },
+                complete: function () {
+                    $('#edit-order-modal').removeClass('blur-loading');
                 }
             });
         });
+
+        $('#time_confirm').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
     });
+
+    function loadInfo(order_id)
+    {
+        var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
+        var url = base_url + '/order/edit?oid=' + order_id;
+        $.get(url, function (response) {
+            $('#edit-order-modal-content').html(response);
+
+        });
+    }
 </script>
