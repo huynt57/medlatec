@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title"><?php echo $data['id'] ?></h4>
+    <h4 class="modal-title">Cập nhật yêu cầu mã số: <?php echo $data['id'] ?></h4>
 </div>
 <div class="modal-body">
     <form role="form" id="form-edit-order">
@@ -32,10 +32,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Trạng thái</label>
-                    <select class="form-control">
+                    <select class="form-control" name="status">
                         <?php foreach (Util::getStatusValue() as $key => $value): ?>
-                            <option value="<?php echo $key ?>"><?php echo $value ?></option>
-                        <?php endforeach; ?>
+                            <option value="<?php echo $key ?>" <?php
+                            if ($data['status'] == $key):
+                                ?>  selected=""
+                                    <?php endif; ?>><?php echo $value ?></option>
+                                <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -52,11 +55,11 @@
                 </div>
                 <div class="form-group">
                     <label for="created_at">Thời điểm tạo</label>
-                    <input type="text" name="created_at" class="form-control" id="created_at" value="<?php echo $data['created_at'] ?>" >
+                    <input type="text" name="created_at" class="form-control" id="created_at" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="updated_at">Thời điểm cập nhật</label>
-                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo $data['updated_at'] ?>" >
+                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo Date('d-m-Y',$data['updated_at']) ?>" >
                 </div>
 
                 <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >
@@ -72,9 +75,9 @@
     <button type="button" class="btn btn-primary" id="edit-order-submit">Lưu</button>
 </div>
 <script>
-   $(document).ready(function() {
+    $(document).ready(function () {
         $('body').on('focus', "#time_confirm", function () {
             $(this).datepicker();
         });
-   });
+    });
 </script>

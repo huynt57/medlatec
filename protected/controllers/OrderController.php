@@ -101,7 +101,7 @@ class OrderController extends Controller {
             $itemArr['phone'] = $item->phone;
             $itemArr['email'] = $item->email;
             $itemArr['requirement'] = $item->requirement;
-            $itemArr['created_at'] = $item->created_at;
+            $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['status'] = $item->status;
             $itemArr['status_name'] = Util::getStatusLabel($item->status);
             $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
