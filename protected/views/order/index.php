@@ -47,6 +47,14 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="edit-order-result-modal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="edit-order-result-modal-content">
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 
 
 <script>
@@ -80,6 +88,7 @@
         $(document).on('click', '#edit-order-submit', function () {
             var form = $('#form-edit-order');
             var data = form.serialize();
+
             $.ajax({
                 beforeSend: function () {
                     $('#edit-order-modal').addClass('blur-loading');
@@ -92,14 +101,60 @@
                 {
                     if (response.status === 1) {
                         // Show success message
-                       displayMessage('tt', 1);
+                        displayMessage('tt', 1);
                     } else {
                         // Show error message
-                        
+                        displayMessage('tt', 0);
                     }
                 },
                 complete: function () {
                     $('#edit-order-modal').removeClass('blur-loading');
+                }
+            });
+        });
+
+        $(document).on('click', '#edit-order-result-submit', function () {
+            var form = $('#form-edit-result-order');
+            var doctor = $('#doctor').val();
+            var diagnose = $('#diagnose').val();
+            var status = $('#status').val();
+            var order_id = $('#order_id').val();
+            //console.log(doctor);
+            // console.log($('#file'));
+            var formdata = new FormData();
+            var files = $("#file")[0].files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                formdata.append("file[]", file);
+            }
+            formdata.append('doctor', doctor);
+            formdata.append('diagnose', diagnose);
+            formdata.append('status', status);
+            formdata.append('order_id', order_id);
+
+            $.ajax({
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#edit-order-result-modal').addClass('blur-loading');
+                    console.log(formdata);
+                },
+                //  dataType: 'json',
+                url: '<?php echo Yii::app()->createUrl('order/updateResult') ?>',
+                method: 'POST',
+                data: formdata,
+                success: function (response)
+                {
+                    if (response.status === 1) {
+                        // Show success message
+                        displayMessage('tt', 1);
+                    } else {
+                        // Show error message
+                        displayMessage('tt', 0);
+                    }
+                },
+                complete: function () {
+                    $('#edit-order-result-modal').removeClass('blur-loading');
                 }
             });
         });

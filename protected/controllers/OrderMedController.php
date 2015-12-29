@@ -38,7 +38,7 @@ class OrderMedController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $criteria->condition = 'status = 1';
+        $criteria->condition = 'status > 1';
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -53,7 +53,7 @@ class OrderMedController extends Controller {
             $itemArr['status'] = $item->status;
             $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
             $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
-            $action.='';
+            $action.='<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-info">Thêm kết quả</span></a>';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }

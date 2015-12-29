@@ -105,8 +105,9 @@ class OrderController extends Controller {
             $itemArr['status'] = $item->status;
             $itemArr['status_name'] = Util::getStatusLabel($item->status);
             $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
             $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
-            $action.='';
+            $action.=' <a data-toggle="modal" href="' . $result_url . '" data-target="#edit-order-modal"><span class="label label-info">Thêm kết quả</span></a>';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
@@ -132,6 +133,39 @@ class OrderController extends Controller {
         } else {
             ResponseHelper::JsonReturnError('', 'Update failed');
         }
+    }
+
+    public function actionResult() {
+        $request = Yii::app()->request;
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_modal';
+        $order_id = StringHelper::filterString($request->getQuery('oid'));
+        $data = OrderMedlatec::model()->getOrderDetail($order_id);
+        $this->render('result', array('data' => $data));
+    }
+
+    public function actionUpdateResult() {
+        try {
+            $urls = NULL;
+
+            $doctor = StringHelper::filterString($_POST['doctor']);
+            $diagnose = StringHelper::filterString($_POST['diagnose']);
+            $status = StringHelper::filterString($_POST['status']);
+            $order_id = StringHelper::filterString($_POST['order_id']);
+            $attr = array('doctor' => $doctor, 'diagnose' => $diagnose, 'status' => $status, 'order_id'=>$order_id);
+          //  var_dump($_FILES); die;
+            if (isset($_FILES['file'])) {
+                $urls = UploadHelper::getUrlUploadMultiImages($_FILES['file'], 'result');
+            }
+            if (ResultMedlatec::model()->updateResultByOrder($attr, $urls)) {
+                ResponseHelper::JsonReturnSuccess('', 'Success');
+            } else {
+                ResponseHelper::JsonReturnError('', 'Error');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+        // ResultMedlatec::model()->up
     }
 
     public function actionDeleteOrder() {

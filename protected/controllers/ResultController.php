@@ -42,7 +42,7 @@ class ResultController extends Controller {
             $itemArr['service'] = $item->service;
             $itemArr['time'] = $item->time;
             $itemArr['status'] = $item->status;
-            $itemArr['created_at'] = $item->created_at;
+            $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['action'] = '';
             $returnArr[] = $itemArr;
         }
@@ -85,6 +85,14 @@ class ResultController extends Controller {
     public function actionDeleteOrder() {
         
     }
+    
+    public function actionUpdateResultOrder()
+    {
+        $request - Yii::app()->request;
+        $order_id = StringHelper::filterString($request->getQuery('oid'));
+        
+    }
+        
 
     // Uncomment the following methods and override them if needed
     /*

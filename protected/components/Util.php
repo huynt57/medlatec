@@ -52,16 +52,16 @@ class Util {
                 $name = '<span class="label label-info">Đã xác nhận</span>';
                 break;
             case 2:
-                $name = '<span class="label label-orange">Đã đặt</span>';
+                $name = '<span class="label label-default">Đã đặt</span>';
                 break;
             case 3:
-                $name = '<span class="label label-teal">Đang đợi kết quả</span>';
+                $name = '<span class="label label-warning">Đang đợi kết quả</span>';
                 break;
             case 4:
                 $name = '<span class="label label-success">Đã hoàn thành</span>';
                 break;
             default :
-                $name = '<span class="label label-gray">Chưa xác định</span>';
+                $name = '<span class="label label-default">Chưa xác định</span>';
                 break;
         }
         return $name;
@@ -104,6 +104,31 @@ class Util {
             '3' => 'Đang đợi kết quả',
             '4' => 'Đã hoàn thành',
         );
+    }
+
+    public static function sendNotificationBasedOnStatus($device_token, $status) {
+        switch ($status) {
+//            case -1:
+//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
+//                break;
+//            case 0:
+//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
+//                break;
+//            case 1:
+//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
+//                break;
+            case 2:
+                GcmHelper::sendNotification($device_token, 'Đã đặt dịch vụ !');
+                break;
+//            case 3:
+//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
+//                break;
+            case 4:
+                GcmHelper::sendNotification($device_token, 'Yêu cầu hoàn thành !');
+                break;
+            default :
+                break;
+        }
     }
 
 }
