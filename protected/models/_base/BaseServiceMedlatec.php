@@ -15,6 +15,8 @@
  * @property string $favorable
  * @property string $description
  * @property integer $status
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  */
 abstract class BaseServiceMedlatec extends GxActiveRecord {
@@ -37,10 +39,10 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('status', 'numerical', 'integerOnly'=>true),
+			array('status, created_at, updated_at', 'numerical', 'integerOnly'=>true),
 			array('service_name, service_price, favorable, description', 'safe'),
-			array('service_name, service_price, favorable, description, status', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, service_name, service_price, favorable, description, status', 'safe', 'on'=>'search'),
+			array('service_name, service_price, favorable, description, status, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, service_name, service_price, favorable, description, status, created_at, updated_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,8 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 			'favorable' => Yii::t('app', 'Favorable'),
 			'description' => Yii::t('app', 'Description'),
 			'status' => Yii::t('app', 'Status'),
+			'created_at' => Yii::t('app', 'Created At'),
+			'updated_at' => Yii::t('app', 'Updated At'),
 		);
 	}
 
@@ -74,6 +78,8 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 		$criteria->compare('favorable', $this->favorable, true);
 		$criteria->compare('description', $this->description, true);
 		$criteria->compare('status', $this->status);
+		$criteria->compare('created_at', $this->created_at);
+		$criteria->compare('updated_at', $this->updated_at);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

@@ -1,69 +1,49 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title"><?php echo $data['id'] ?></h4>
+    <h4 class="modal-title">Cập nhật dịch vũ mã <?php echo $data->id?></h4>
 </div>
 <div class="modal-body">
-    <form role="form" id="form-edit-order">
-
+    <form role="form" id="form-edit-service">
         <div class="box-body">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Tên</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?php echo $data['name'] ?>" >
+                    <label for="service_name">Tên dịch vụ</label>
+                    <input type="text" class="form-control" id="service_name" name="service_name" value="<?php echo $data->service_name?>" >
                 </div>
                 <div class="form-group">
-                    <label for="phone">Số điện thoại</label>
-                    <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $data['phone'] ?>" >
+                    <label for="service_price">Giá dịch vụ</label>
+                    <input type="text" class="form-control" id="service_price" name="service_price" value="<?php echo $data->service_price?>">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" id="email" value="<?php echo $data['email'] ?>" >
-                </div>
-                <div class="form-group">
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" name="address" class="form-control" id="address" value="<?php echo $data['address'] ?>"  >
-                </div>
-                <div class="form-group">
-                    <label for="requirement">Yêu cầu</label>
-                    <textarea rows="5" class="form-control" id="requirement" name="requirement" value="<?php echo $data['requirement'] ?>" ></textarea>
+                    <label for="favorable">Khuyến mãi</label>
+                    <input type="text" class="form-control" id="favorable" name="favorable" value="<?php echo $data->favorable?>" >
                 </div>
 
             </div>
+            <input type="hidden" name="service_id" value="<?php echo $data->id ?>" >
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="number">Trạng thái</label>
-                    <input type="text" class="form-control" id="number" name="number" >
+                    <label for="description">Miêu tả</label>
+                    <input type="text" class="form-control" id="description" name="description" value="<?php echo $data->description?>">
                 </div>
                 <div class="form-group">
-                    <label for="service_name">Dịch vụ</label>
-                    <input type="text" class="form-control" id="service_name" name="service_name" value="<?php echo $data['service_name'] ?>" >
+                    <label>Trạng thái</label>
+                    <select class="form-control" name="status">
+                        <?php foreach (Util::getStatusValue() as $key => $value): ?>
+                            <option value="<?php echo $key ?>" <?php
+                            if ($data->status == $key):
+                                ?>  selected=""
+                                    <?php endif; ?>><?php echo $value ?></option>
+                                <?php endforeach; ?>
+                    </select>                           
                 </div>
-                <div class="form-group">
-                    <label for="time_confirm">Thời gian xác nhận</label>
-                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo $data['time_confirm'] ?>"  >
-                </div>
-                <div class="form-group">
-                    <label for="time_meet">Thời gian gặp</label>
-                    <input type="text" name="time_meet" class="form-control" id="time_meet" value="<?php echo $data['time_meet'] ?>" >
-                </div>
-                <div class="form-group">
-                    <label for="created_at">Thời điểm tạo</label>
-                    <input type="text" name="created_at" class="form-control" id="created_at" value="<?php echo $data['created_at'] ?>" >
-                </div>
-                <div class="form-group">
-                    <label for="updated_at">Thời điểm cập nhật</label>
-                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo $data['updated_at'] ?>" >
-                </div>
-
-                <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >
             </div>
 
         </div><!-- /.box-body -->
-
 
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Đóng</button>
-    <button type="button" class="btn btn-primary" id="edit-order-submit">Lưu</button>
+    <button type="button" class="btn btn-primary" id="edit-service-submit">Lưu</button>
 </div>

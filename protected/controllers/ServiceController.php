@@ -2,6 +2,9 @@
 
 class ServiceController extends Controller {
 
+    public $layout;
+    public $layoutPath;
+
     public function actionIndex() {
         $this->render('index');
     }
@@ -44,10 +47,13 @@ class ServiceController extends Controller {
             $itemArr['service_price'] = $item->service_price;
             $itemArr['favorable'] = $item->favorable;
             $itemArr['description'] = $item->description;
-            $itemArr['status'] = $item->status;
-            $itemArr['created_at'] = $item->created_at;
-            $itemArr['updated_at'] = $item->updated_at;
-            $itemArr['action'] = '';
+            $itemArr['status'] = Util::getStatusLabel($item->status);
+            $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
+            $itemArr['updated_at'] = Date('d-m-Y', $item->updated_at);
+            $edit_url = Yii::app()->createUrl('service/edit', array('service_id' => $item->id));
+            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-service-modal" onclick=loadInfoService(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
+
+            $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
 
@@ -57,8 +63,10 @@ class ServiceController extends Controller {
 
     public function actionEdit() {
         $request = Yii::app()->request;
-        $order_id = StringHelper::filterString($request->getQuery('order_id'));
-        $data = ServiceMedlatec::model()->findByPk($order_id);
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_modal';
+        $service_id = StringHelper::filterString($request->getQuery('service_id'));
+        $data = ServiceMedlatec::model()->findByPk($service_id);
         $this->render('edit', array('data' => $data));
     }
 

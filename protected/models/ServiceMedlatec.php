@@ -20,7 +20,7 @@ class ServiceMedlatec extends BaseServiceMedlatec {
         }
     }
 
-    public function addResult($attr) {
+    public function addService($attr) {
         $model = new ServiceMedlatec;
         $model->setAttributes($attr);
         $model->updated_at = time();
