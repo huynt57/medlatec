@@ -37,18 +37,43 @@ class ResultMedlatec extends BaseResultMedlatec {
         return FALSE;
     }
 
+    public function getDetailResult($result_id) {
+        $service_name = null;
+        $patient_name = null;
+        $result = ResultMedlatec::model()->findByPk($result_id);
+        $order = OrderMedlatec::model()->findByPk($result->order_id);
+        if ($order) {
+            $service = ServiceMedlatec::model()->findByPk($order->service_id);
+            if ($service) {
+                $service_name = $service->service_name;
+            }
+            $patient_name = $order->name;
+        }
+        $returnArr = array();
+        $attrLabels = $this->attributeLabels();
+        foreach ($attrLabels as $key => $value) {
+            $returnArr[$key] = $result->$key;
+            $returnArr['patient_name_f'] = $patient_name;
+            $returnArr['service_name_f'] = $service_name;
+            $returnArr['email'] = $order->email;
+            $returnArr['address'] = $order->address;
+        }
+        return $returnArr;
+    }
+
     public function updateResultByOrder($attr, $urls) {
 
-        $check = ResultMedlatec::model()->findAllByAttributes(array('order_id' => $attr['order_id']));
+        $check = ResultMedlatec::model()->findByAttributes(array('order_id' => $attr['order_id']));
         if ($check) {
             $check->setAttributes($attr);
             $check->updated_at = time();
             $check->save(FALSE);
-            $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
-            foreach ($files as $file) {
-                $file->delete();
-            }
+
             if (!empty($urls) && is_array($urls)) {
+                $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
+                foreach ($files as $file) {
+                    $file->delete();
+                }
                 foreach ($urls as $url) {
                     $file = new ResultFile;
                     $file->url = $url;
@@ -62,6 +87,7 @@ class ResultMedlatec extends BaseResultMedlatec {
         } else {
             $model = new ResultMedlatec;
             $model->setAttributes($attr);
+            $model->order_id = $attr['order_id'];
             $model->created_at = time();
             $model->updated_at = time();
             $model->save(FALSE);

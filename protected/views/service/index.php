@@ -113,6 +113,7 @@
                 "url": "<?php echo Yii::app()->createUrl('service/getAllService') ?>",
                 "type": "GET"
             },
+            "order": [[0, "desc"]],
             "columns": [
                 {data: 'id', name: 'id'},
                 {data: 'service_name', name: 'service_name'},
@@ -130,6 +131,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#edit-service-modal').on('hidden.bs.modal', function () {
+            $('#service_management').DataTable().ajax.reload();
+        });
+        $('#create-service-modal').on('hidden.bs.modal', function () {
+            $('#service_management').DataTable().ajax.reload();
+        });
         $(document).on('click', '#create-service-submit', function () {
             var form = $('#form-create-service');
             var data = form.serialize();
@@ -156,7 +163,7 @@
                 }
             });
         });
-        
+
         $(document).on('click', '#edit-service-submit', function () {
             var form = $('#form-edit-service');
             var data = form.serialize();

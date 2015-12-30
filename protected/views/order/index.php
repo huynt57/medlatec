@@ -66,6 +66,7 @@
                 "url": "<?php echo Yii::app()->createUrl('order/getAllOrder') ?>",
                 "type": "GET"
             },
+                    "order": [[0, "desc"]],
             "columns": [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
@@ -78,6 +79,12 @@
 //                {data: 'created_at', name: 'created_at'},
 //                {data: 'updated_at', name: 'updated_at'}
             ]
+        });
+        $('#edit-order-modal').on('hidden.bs.modal', function () {
+            $('#order_management').DataTable().ajax.reload();
+        });
+        $('#edit-order-result-modal').on('hidden.bs.modal', function () {
+            $('#order_management').DataTable().ajax.reload();
         });
     });
 

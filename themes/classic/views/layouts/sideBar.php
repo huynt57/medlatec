@@ -26,7 +26,12 @@
             <li class="header">Điều hướng chính</li>
             <li>
                 <a href="<?php echo Yii::app()->createAbsoluteUrl('order/index') ?>">
-                    <span>Quản lý đặt khám</span>
+                    <span>Quản lý đặt khám Meboo</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
+                    <span>Quản lý đặt khám Medlatec</span>
                 </a>
             </li>
             <li>
