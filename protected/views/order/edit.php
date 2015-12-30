@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="requirement">Yêu cầu</label>
-                    <textarea rows="5" class="form-control" id="requirement" name="requirement" value="<?php echo $data['requirement'] ?>" ></textarea>
+                    <textarea rows="5" class="form-control" id="requirement" name="requirement" value="<?php echo $data['requirement'] ?>" ><?php echo $data['requirement'] ?></textarea>
                 </div>
 
             </div>

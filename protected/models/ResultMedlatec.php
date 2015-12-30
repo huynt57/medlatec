@@ -68,7 +68,12 @@ class ResultMedlatec extends BaseResultMedlatec {
             $check->setAttributes($attr);
             $check->updated_at = time();
             $check->save(FALSE);
-
+            $order = OrderMedlatec::model()->findByPk($attr['order_id']);
+            $meboo = $order->user_meboo;
+            $meboo_token = User::model()->findByPk($meboo)->device_token;
+            if ($meboo_token) {
+                Util::sendNotificationBasedOnStatus($meboo_token, $order->status);
+            }
             if (!empty($urls) && is_array($urls)) {
                 $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
                 foreach ($files as $file) {

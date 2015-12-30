@@ -60,7 +60,7 @@
                             if ($data['status'] == $order->id):
                                 ?>  selected=""
                                     <?php endif; ?>><?php echo $order->id ?></option>
-                        <?php endforeach; ?>
+                                <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -74,8 +74,7 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('body').on('focus', "#time_confirm", function () {
-            $(this).datepicker();
-        });
+        $('#time_confirm').datepicker();
+      
     });
 </script>

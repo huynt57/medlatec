@@ -182,7 +182,7 @@
         var url = base_url + '/result/order?oid=' + order_id;
         $.get(url, function (response) {
             $('#edit-order-modal-content').html(response);
-
+           
         });
     }
 
@@ -192,7 +192,7 @@
         var url = base_url + '/result/edit?result_id=' + result_id;
         $.get(url, function (response) {
             $('#edit-order-modal-content').html(response);
-
+            $('#time_confirm').datepicker();
         });
     }
 </script>

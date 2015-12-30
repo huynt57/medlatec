@@ -177,7 +177,15 @@
         var url = base_url + '/order/edit?oid=' + order_id;
         $.get(url, function (response) {
             $('#edit-order-modal-content').html(response);
-
+        });
+    }
+    
+    function loadInfoResult(order_id)
+    {
+        var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
+        var url = base_url + '/order/result?oid=' + order_id;
+        $.get(url, function (response) {
+            $('#edit-order-result-modal-content').html(response);
         });
     }
 </script>
