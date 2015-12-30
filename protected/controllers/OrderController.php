@@ -98,6 +98,7 @@ class OrderController extends Controller {
             $itemArr = array();
             $itemArr['id'] = $item->id;
             $itemArr['name'] = $item->name;
+          //  $itemArr['service_id'] = $item->service_id;
             $itemArr['phone'] = $item->phone;
             $itemArr['email'] = $item->email;
             $itemArr['requirement'] = $item->requirement;
@@ -122,7 +123,8 @@ class OrderController extends Controller {
         $this->layout = 'main_modal';
         $order_id = StringHelper::filterString($request->getQuery('oid'));
         $data = OrderMedlatec::model()->getOrderDetail($order_id);
-        $this->render('edit', array('data' => $data));
+        $services = ServiceMedlatec::model()->findAll();
+        $this->render('edit', array('data' => $data, 'services' => $services));
     }
 
     public function actionEditProcess() {
