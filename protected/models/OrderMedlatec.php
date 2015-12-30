@@ -17,7 +17,11 @@ class OrderMedlatec extends BaseOrderMedlatec {
                 $meboo = $order->user_meboo;
                 $meboo_token = User::model()->findByPk($meboo)->device_token;
                 if ($meboo_token) {
-                    Util::sendNotificationBasedOnStatus($meboo_token, $order->status);
+                    $message = array('medlatec_order' =>
+                        array(
+                            'order_id' => $attr['order_id'],
+                        ),);
+                    Util::sendNotificationBasedOnStatus($meboo_token, $order->status, $message);
                 }
                 return TRUE;
             }

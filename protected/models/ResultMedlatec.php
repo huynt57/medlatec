@@ -72,7 +72,11 @@ class ResultMedlatec extends BaseResultMedlatec {
             $meboo = $order->user_meboo;
             $meboo_token = User::model()->findByPk($meboo)->device_token;
             if ($meboo_token) {
-                Util::sendNotificationBasedOnStatus($meboo_token, $order->status);
+                $message = array('medlatec_order' =>
+                    array(
+                        'order_id' => $attr['order_id'],
+                    ),);
+                Util::sendNotificationBasedOnStatus($meboo_token, $order->status, $message);
             }
             if (!empty($urls) && is_array($urls)) {
                 $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
