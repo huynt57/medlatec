@@ -62,11 +62,11 @@
                 </div>
                 <div class="form-group">
                     <label for="created_at">Thời điểm tạo</label>
-                    <input type="text" name="created_at" class="form-control" id="created_at" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
+                    <input type="text" name="created_at" class="form-control" id="created_at" disabled="" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="updated_at">Thời điểm cập nhật</label>
-                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo Date('d-m-Y', $data['updated_at']) ?>" >
+                    <input type="text" name="updated_at" class="form-control" id="updated_at" disabled="" value="<?php echo Date('d-m-Y', $data['updated_at']) ?>" >
                 </div>
 
                 <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >

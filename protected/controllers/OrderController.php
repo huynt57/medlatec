@@ -98,7 +98,7 @@ class OrderController extends Controller {
             $itemArr = array();
             $itemArr['id'] = $item->id;
             $itemArr['name'] = $item->name;
-          //  $itemArr['service_id'] = $item->service_id;
+            //  $itemArr['service_id'] = $item->service_id;
             $itemArr['phone'] = $item->phone;
             $itemArr['email'] = $item->email;
             $itemArr['requirement'] = $item->requirement;
@@ -169,6 +169,8 @@ class OrderController extends Controller {
         }
         // ResultMedlatec::model()->up
     }
+
+    
 
     public function actionDeleteOrder() {
         

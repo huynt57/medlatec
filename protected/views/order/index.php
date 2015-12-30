@@ -66,7 +66,7 @@
                 "url": "<?php echo Yii::app()->createUrl('order/getAllOrder') ?>",
                 "type": "GET"
             },
-                    "order": [[0, "desc"]],
+            "order": [[0, "desc"]],
             "columns": [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
@@ -177,9 +177,13 @@
         var url = base_url + '/order/edit?oid=' + order_id;
         $.get(url, function (response) {
             $('#edit-order-modal-content').html(response);
+            $('#time_confirm').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
         });
+
     }
-    
+
     function loadInfoResult(order_id)
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
