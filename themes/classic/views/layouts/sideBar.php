@@ -29,11 +29,13 @@
                     <span>Quản lý đặt khám Meboo</span>
                 </a>
             </li>
+            <?php if(!empty(Yii::app()->session['is_medlatec'])):?>
             <li>
                 <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
                     <span>Quản lý đặt khám Medlatec</span>
                 </a>
             </li>
+            <?php endif;?>
             <li>
                 <a href="<?php echo Yii::app()->createAbsoluteUrl('result/index') ?>">
                     <span>Quản lý kết quả đặt khám</span>

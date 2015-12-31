@@ -70,14 +70,16 @@ class ResultMedlatec extends BaseResultMedlatec {
             $check->save(FALSE);
             $order = OrderMedlatec::model()->findByPk($attr['order_id']);
             $meboo = $order->user_meboo;
-            $meboo_token = User::model()->findByPk($meboo)->device_token;
+            $meboo_token = User::model()->findByPk($meboo);
             if ($meboo_token) {
-                Util::sendNotificationBasedOnStatus($meboo_token, $order->status);
+                Util::sendNotificationBasedOnStatus($meboo_token->device_token, $order->status);
             }
             if (!empty($urls) && is_array($urls)) {
                 $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
-                foreach ($files as $file) {
-                    $file->delete();
+                if ($files) {
+                    foreach ($files as $file) {
+                        $file->delete();
+                    }
                 }
                 foreach ($urls as $url) {
                     $file = new ResultFile;

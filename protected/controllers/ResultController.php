@@ -5,6 +5,15 @@ class ResultController extends Controller {
     public $layoutPath;
     public $layout;
 
+    protected function beforeAction($action) {
+        if ($action !== 'login') {
+            if (empty(Yii::app()->session['logged'])) {
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            }
+        }
+        return true;
+    }
+
     public function actionIndex() {
         $this->render('index');
     }
@@ -33,6 +42,7 @@ class ResultController extends Controller {
             $criteria->addSearchCondition("status", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
+        $count = ResultMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
@@ -65,8 +75,8 @@ class ResultController extends Controller {
 
             $returnArr[] = $itemArr;
         }
-
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
+        //$all  = ResultMedlatec::model()->findAll();
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
             "recordsFiltered" => count($data)));
     }
 
@@ -78,7 +88,7 @@ class ResultController extends Controller {
         $data = ResultMedlatec::model()->getDetailResult($result_id);
         $services = ServiceMedlatec::model()->findAll();
         $orders = OrderMedlatec::model()->findAll();
-        $this->render('edit', array('data' => $data, 'services' => $services, 'orders'=>$orders));
+        $this->render('edit', array('data' => $data, 'services' => $services, 'orders' => $orders));
     }
 
     public function actionAdd() {

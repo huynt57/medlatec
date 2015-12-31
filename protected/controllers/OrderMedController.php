@@ -5,11 +5,20 @@ class OrderMedController extends Controller {
     public $layoutPath;
     public $layout;
 
+    protected function beforeAction($action) {
+        if ($action !== 'login') {
+            if (empty(Yii::app()->session['logged'])) {
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            }
+        }
+        return true;
+    }
+
     public function actionIndex() {
         $this->render('index');
     }
 
-    public function actionGetOrderMedlatec() {
+    public function actionGetAllOrderMedlatec() {
         $columns = array(
             0 => 'id',
             1 => 'name',
@@ -35,10 +44,11 @@ class OrderMedController extends Controller {
             $where = true;
         }
         //echo $order;
+        $count = OrderMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $criteria->condition = 'status > 1';
+        $criteria->condition = "status >= 1";
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -46,20 +56,23 @@ class OrderMedController extends Controller {
             $itemArr = array();
             $itemArr['id'] = $item->id;
             $itemArr['name'] = $item->name;
+            //  $itemArr['service_id'] = $item->service_id;
             $itemArr['phone'] = $item->phone;
             $itemArr['email'] = $item->email;
             $itemArr['requirement'] = $item->requirement;
-            $itemArr['created_at'] = $item->created_at;
+            $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['status'] = $item->status;
+            $itemArr['status_name'] = Util::getStatusLabel($item->status);
             $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
-            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
-            $action.='<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-info">Thêm kết quả</span></a>';
+            $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
+            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
+            $action.=' <a data-toggle="modal" href="' . $result_url . '" data-target="#edit-order-result-modal" onclick=loadInfoResult(' . $item->id . ')><span class="label label-info">Thêm kết quả</span></a>';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
-
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
-            "recordsFiltered" => count($data)));
+        // $all = OrderMedlatec::model()->findAll();
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
+            "recordsFiltered" => $count));
     }
 
     public function actionEdit() {

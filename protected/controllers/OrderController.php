@@ -5,6 +5,15 @@ class OrderController extends Controller {
     public $layoutPath;
     public $layout;
 
+    protected function beforeAction($action) {
+        if ($action !== 'login') {
+            if (empty(Yii::app()->session['logged'])) {
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            }
+        }
+        return true;
+    }
+
     public function actionIndex() {
         $this->render('index');
     }
@@ -58,8 +67,8 @@ class OrderController extends Controller {
             $returnArr[] = $itemArr;
         }
 
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
-            "recordsFiltered" => count($data)));
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
+            "recordsFiltered" => $count));
     }
 
     public function actionGetAllOrder() {
@@ -88,9 +97,11 @@ class OrderController extends Controller {
             $where = true;
         }
         //echo $order;
+        $count = OrderMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
+       
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -112,9 +123,9 @@ class OrderController extends Controller {
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
-
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
-            "recordsFiltered" => count($data)));
+        // $all = OrderMedlatec::model()->findAll();
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
+            "recordsFiltered" => $count));
     }
 
     public function actionEdit() {
@@ -169,8 +180,6 @@ class OrderController extends Controller {
         }
         // ResultMedlatec::model()->up
     }
-
-    
 
     public function actionDeleteOrder() {
         

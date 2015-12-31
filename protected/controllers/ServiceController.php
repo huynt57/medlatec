@@ -5,6 +5,15 @@ class ServiceController extends Controller {
     public $layout;
     public $layoutPath;
 
+    protected function beforeAction($action) {
+        if ($action !== 'login') {
+            if (empty(Yii::app()->session['logged'])) {
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            }
+        }
+        return true;
+    }
+
     public function actionIndex() {
         $this->render('index');
     }
@@ -35,6 +44,7 @@ class ServiceController extends Controller {
             $criteria->addSearchCondition("description", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
+        $count = ServiceMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
@@ -56,8 +66,8 @@ class ServiceController extends Controller {
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }
-
-        echo json_encode(array('data' => $returnArr, "recordsTotal" => count($data),
+        // $all = ServiceMedlatec::model()->findAll();
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
             "recordsFiltered" => count($data)));
     }
 

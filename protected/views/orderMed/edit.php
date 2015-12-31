@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="requirement">Yêu cầu</label>
-                    <textarea rows="5" class="form-control" id="requirement" name="requirement" value="<?php echo $data['requirement'] ?>" ></textarea>
+                    <textarea rows="5" class="form-control" id="requirement" name="requirement" value="<?php echo $data['requirement'] ?>" ><?php echo $data['requirement'] ?></textarea>
                 </div>
 
             </div>
@@ -42,24 +42,31 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="service_name">Dịch vụ</label>
-                    <input type="text" class="form-control" id="service_name" name="service_name" value="<?php echo $data['service_name'] ?>" >
+                    <label>Dịch vụ</label>
+                    <select class="form-control" name="service_id">
+                        <?php foreach ($services as $service): ?>
+                            <option value="<?php echo $service->id ?>" <?php
+                            if ($data['service_id'] == $service->id):
+                                ?>  selected=""
+                                    <?php endif; ?>><?php echo $service->service_name ?></option>
+                                <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="time_confirm">Thời gian xác nhận</label>
-                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo $data['time_confirm'] ?>"  >
+                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo Date('d-m-Y', $data['time_confirm']) ?>"  >
                 </div>
                 <div class="form-group">
                     <label for="time_meet">Thời gian gặp</label>
-                    <input type="text" name="time_meet" class="form-control" id="time_meet" value="<?php echo $data['time_meet'] ?>" >
+                    <input type="text" name="time_meet" class="form-control" id="time_meet" value="<?php echo Date('d-m-Y', $data['time_meet']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="created_at">Thời điểm tạo</label>
-                    <input type="text" name="created_at" class="form-control" id="created_at" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
+                    <input type="text" name="created_at" class="form-control" id="created_at" disabled="" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="updated_at">Thời điểm cập nhật</label>
-                    <input type="text" name="updated_at" class="form-control" id="updated_at" value="<?php echo Date('d-m-Y',$data['updated_at']) ?>" >
+                    <input type="text" name="updated_at" class="form-control" id="updated_at" disabled="" value="<?php echo Date('d-m-Y', $data['updated_at']) ?>" >
                 </div>
 
                 <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >
