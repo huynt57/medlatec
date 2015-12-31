@@ -14,6 +14,7 @@ class ResultMedlatec extends BaseResultMedlatec {
             $result->setAttributes($attr);
             //$result->file = $url;
             $result->updated_at = time();
+
             if (isset($urlArr)) {
                 // ResultFile::model()->findAllByAttributes(array('result_id'=>$attr['result_id']))->delete();
             }
@@ -69,6 +70,8 @@ class ResultMedlatec extends BaseResultMedlatec {
             $check->updated_at = time();
             $check->save(FALSE);
             $order = OrderMedlatec::model()->findByPk($attr['order_id']);
+            $order->status = 4;
+            $order->save(FALSE);
             $meboo = $order->user_meboo;
             $meboo_token = User::model()->findByPk($meboo);
             if ($meboo_token) {
@@ -103,6 +106,8 @@ class ResultMedlatec extends BaseResultMedlatec {
             $model->updated_at = time();
             $model->save(FALSE);
             $order = OrderMedlatec::model()->findByPk($attr['order_id']);
+            $order->status = 4;
+            $order->save(FALSE);
             $meboo = $order->user_meboo;
             $meboo_token = User::model()->findByPk($meboo);
             if ($meboo_token) {
