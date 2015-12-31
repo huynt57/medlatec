@@ -72,7 +72,11 @@ class ResultMedlatec extends BaseResultMedlatec {
             $meboo = $order->user_meboo;
             $meboo_token = User::model()->findByPk($meboo);
             if ($meboo_token) {
-                Util::sendNotificationBasedOnStatus($meboo_token->device_token, $order->status);
+                $message = array('medlatec_order' =>
+                    array(
+                        'order_id' => $attr['order_id'],
+                    ),);
+                Util::sendNotificationBasedOnStatus($meboo_token->device_token, $order->status, $message);
             }
             if (!empty($urls) && is_array($urls)) {
                 $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
@@ -98,6 +102,16 @@ class ResultMedlatec extends BaseResultMedlatec {
             $model->created_at = time();
             $model->updated_at = time();
             $model->save(FALSE);
+            $order = OrderMedlatec::model()->findByPk($attr['order_id']);
+            $meboo = $order->user_meboo;
+            $meboo_token = User::model()->findByPk($meboo);
+            if ($meboo_token) {
+                $message = array('medlatec_order' =>
+                    array(
+                        'order_id' => $attr['order_id'],
+                    ),);
+                Util::sendNotificationBasedOnStatus($meboo_token->device_token, $order->status, $message);
+            }
             if (!empty($urls) && is_array($urls)) {
                 foreach ($urls as $url) {
                     $file = new ResultFile;

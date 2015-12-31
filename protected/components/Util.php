@@ -106,7 +106,7 @@ class Util {
         );
     }
 
-    public static function sendNotificationBasedOnStatus($device_token, $status) {
+    public static function sendNotificationBasedOnStatus($device_token, $status, $message) {
         switch ($status) {
 //            case -1:
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
@@ -118,13 +118,13 @@ class Util {
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
 //                break;
             case 2:
-                GcmHelper::sendNotification($device_token, 'Đã đặt dịch vụ !');
+                GcmHelper::sendNotification($device_token, $message);
                 break;
 //            case 3:
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
 //                break;
             case 4:
-                GcmHelper::sendNotification($device_token, 'Yêu cầu hoàn thành !');
+                GcmHelper::sendNotification($device_token, $message);
                 break;
             default :
                 break;
