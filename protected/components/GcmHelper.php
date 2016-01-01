@@ -17,7 +17,7 @@ class GcmHelper {
 
         $headers = array
             (
-            'Authorization: key=AIzaSyAC4urIKsG02UFcPhriY0VziDXXt75te9I',
+            'Authorization: key=AIzaSyCCyBVr5LumIDCfi7FdGCANporagsIs8R8',
             'Content-Type: application/json'
         );
         //die('tt');
