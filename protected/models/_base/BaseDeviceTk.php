@@ -16,6 +16,7 @@
  * @property integer $time_to_live
  * @property integer $status
  * @property integer $user_id
+ * @property string $platform
  *
  */
 abstract class BaseDeviceTk extends GxActiveRecord {
@@ -39,9 +40,10 @@ abstract class BaseDeviceTk extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('created_at, updated_at, time_to_live, status, user_id', 'numerical', 'integerOnly'=>true),
+			array('platform', 'length', 'max'=>255),
 			array('device_token', 'safe'),
-			array('device_token, created_at, updated_at, time_to_live, status, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, device_token, created_at, updated_at, time_to_live, status, user_id', 'safe', 'on'=>'search'),
+			array('device_token, created_at, updated_at, time_to_live, status, user_id, platform', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, device_token, created_at, updated_at, time_to_live, status, user_id, platform', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +66,7 @@ abstract class BaseDeviceTk extends GxActiveRecord {
 			'time_to_live' => Yii::t('app', 'Time To Live'),
 			'status' => Yii::t('app', 'Status'),
 			'user_id' => Yii::t('app', 'User'),
+			'platform' => Yii::t('app', 'Platform'),
 		);
 	}
 
@@ -77,6 +80,7 @@ abstract class BaseDeviceTk extends GxActiveRecord {
 		$criteria->compare('time_to_live', $this->time_to_live);
 		$criteria->compare('status', $this->status);
 		$criteria->compare('user_id', $this->user_id);
+		$criteria->compare('platform', $this->platform, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

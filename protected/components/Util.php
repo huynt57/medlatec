@@ -107,7 +107,11 @@ class Util {
     }
 
     public static function sendNotificationBasedOnStatus($device_token, $status, $message) {
-        switch ($status) {
+        $token = DeviceTk::model()->findByAttributes(array('device_token' => $device_token));
+        if ($token) {
+            $time_diff = time() = $token->updated_at;
+            if ($time_diff < Yii::app()->params['time_to_live']) {
+                switch ($status) {
 //            case -1:
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
 //                break;
@@ -117,17 +121,19 @@ class Util {
 //            case 1:
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
 //                break;
-            case 2:
-                GcmHelper::sendNotification($device_token, $message);
-                break;
+                    case 2:
+                        GcmHelper::sendNotification($device_token, $message);
+                        break;
 //            case 3:
 //                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
 //                break;
-            case 4:
-                GcmHelper::sendNotification($device_token, $message);
-                break;
-            default :
-                break;
+                    case 4:
+                        GcmHelper::sendNotification($device_token, $message);
+                        break;
+                    default :
+                        break;
+                }
+            }
         }
     }
 
