@@ -111,27 +111,12 @@ class Util {
         if ($token) {
             $time_diff = time() = $token->updated_at;
             if ($time_diff < Yii::app()->params['time_to_live']) {
-                switch ($status) {
-//            case -1:
-//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
-//                break;
-//            case 0:
-//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
-//                break;
-//            case 1:
-//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
-//                break;
-                    case 2:
+                if ($status == 2 || $status == 4) {
+                    if ($token->plaform == 'android') {
                         GcmHelper::sendNotification($device_token, $message);
-                        break;
-//            case 3:
-//                GcmHelper::sendNotification($device_token, 'Yêu cầu của bạn đã được Meboo xác nhận !');
-//                break;
-                    case 4:
-                        GcmHelper::sendNotification($device_token, $message);
-                        break;
-                    default :
-                        break;
+                    } else {
+                        IosPushHelper::sendNotification($device_token, $message);
+                    }
                 }
             }
         }
