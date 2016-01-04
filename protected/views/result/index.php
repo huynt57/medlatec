@@ -168,7 +168,7 @@
                 },
                 complete: function () {
                     $('#edit-order-result-modal').removeClass('blur-loading');
-                    form.reset();
+                  //  form.reset();
                     $("#file").val('');
                 }
             });

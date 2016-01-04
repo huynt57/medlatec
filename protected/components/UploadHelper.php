@@ -9,7 +9,7 @@
 class UploadHelper {
 
     public static function getUrlUploadSingleImage($obj, $user_id) {
-        $ext_arr = array('png', 'jpg', 'jpeg', 'bmp');
+        $ext_arr = array('png', 'jpg', 'jpeg', 'bmp', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx');
         $name = StringHelper::filterString($obj['name']);
         $storeFolder = Yii::getPathOfAlias('webroot') . '/images/' . date('Y-m-d', time()) . '/' . $user_id . '/';
         $pathUrl = 'images/' . date('Y-m-d', time()) . '/' . $user_id . '/' . time() . $name;
@@ -33,7 +33,7 @@ class UploadHelper {
     public static function getUrlUploadMultiImages($obj, $user_id) {
         $url_arr = array();
         foreach ($obj["tmp_name"] as $key => $tmp_name) {
-            $ext_arr = array('png', 'jpg', 'jpeg', 'bmp');
+            $ext_arr = array('png', 'jpg', 'jpeg', 'bmp', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx');
             $name = StringHelper::filterString($obj['name'][$key]);
             $storeFolder = Yii::getPathOfAlias('webroot') . '/images/' . date('Y-m-d', time()) . '/' . $user_id . '/';
             $pathUrl = 'images/' . date('Y-m-d', time()) . '/' . $user_id . '/' . time() . $name;

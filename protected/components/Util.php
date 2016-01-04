@@ -109,7 +109,7 @@ class Util {
     public static function sendNotificationBasedOnStatus($device_token, $status, $message) {
         $token = DeviceTk::model()->findByAttributes(array('device_token' => $device_token));
         if ($token) {
-            $time_diff = time() = $token->updated_at;
+            $time_diff = time() - $token->updated_at;
             if ($time_diff < Yii::app()->params['time_to_live']) {
                 if ($status == 2 || $status == 4) {
                     if ($token->plaform == 'android') {
