@@ -112,7 +112,7 @@ class Util {
             $time_diff = time() - $token->updated_at;
             if ($time_diff < Yii::app()->params['time_to_live']) {
                 if ($status == 2 || $status == 4) {
-                    if ($token->plaform == 'android') {
+                    if ($token->platform == 'android') {
                         GcmHelper::sendNotification($device_token, $message);
                     } else {
                         IosPushHelper::sendNotification($device_token, $message);
