@@ -185,15 +185,18 @@ class OrderController extends Controller {
         
     }
 
-    public function actionTestPushIos() {
-        $device_token = '04df1e72fa2c2fa73d59a3166b2935959a18610acb092a1402169deb209c5411';
-        IosPushHelper::sendNotification($device_token, 'test');
-    }
-
-    public function actionTestPushAndroid() {
-        $device_token = '';
-        GcmHelper::sendNotification($device_token, 'test');
-    }
+//    public function actionTestPushIos() {
+//        $device_token = '04df1e72fa2c2fa73d59a3166b2935959a18610acb092a1402169deb209c5411';
+//        IosPushHelper::sendNotification($device_token, 'test');
+//    }
+//
+//    public function actionTestPushAndroid() {
+//        $device_token = 'cJQqrODAQsQ:APA91bEb7OtfQsdsPSHHXDfgKb5l3ETj_eO7bjTXPd-n_-LzkMsSFULoM4RfOrNzbxYJ9u61ANGK497zeczv3X4BsJlPuT6mAKbScursqTDeGYqBX-sTdWFE2JiPIysrLTc-LOb9x2W-';
+//        var_dump(GcmHelper::sendNotification($device_token, array('medlatec_order' =>
+//                    array(
+//                        'order_id' => '1',
+//                    ),)));
+//    }
 
     // Uncomment the following methods and override them if needed
     /*
