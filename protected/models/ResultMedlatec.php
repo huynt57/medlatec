@@ -73,14 +73,25 @@ class ResultMedlatec extends BaseResultMedlatec {
             $order->status = 4;
             $order->save(FALSE);
             $meboo = $order->user_meboo;
-            $meboo_token = User::model()->findByPk($meboo);
-            if ($meboo_token) {
-                $message = array('medlatec_order' =>
-                    array(
-                        'order_id' => $attr['order_id'],
-                    ),);
-                Util::sendNotificationBasedOnStatus($meboo_token->device_token, $order->status, $message);
-            }
+            $device_tokens = DeviceTk::model()->findAllByAttributes(array('user_id' => $meboo));
+            $message_android = array('medlatec_order' =>
+                array(
+                    'order_id' => $attr['order_id'],
+                ),);
+            $message_ios = array(
+                'alert' => 'Dịch vụ của bạn vừa có thông tin',
+                'sound' => 'default',
+                'data' => array(
+                    'id' => $attr['order_id'],
+                    'type' => '0',
+                )
+            );
+            $message = array('message_android' => $message_android, 'message_ios' => $message_ios);
+            foreach ($device_tokens as $token) {
+                //  echo $token->platform; 
+                Util::sendNotificationBasedOnStatus($token->device_token, $order->status, $message);
+            } //die;
+
             if (!empty($urls) && is_array($urls)) {
                 $files = ResultFile::model()->findAllByAttributes(array('result_id' => $check->id));
                 if ($files) {

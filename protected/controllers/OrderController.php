@@ -5,14 +5,14 @@ class OrderController extends Controller {
     public $layoutPath;
     public $layout;
 
-    protected function beforeAction($action) {
-        if ($action !== 'login') {
-            if (empty(Yii::app()->session['logged'])) {
-                $this->redirect(Yii::app()->createUrl('user/login'));
-            }
-        }
-        return true;
-    }
+//    protected function beforeAction($action) {
+//        if ($action !== 'login') {
+//            if (empty(Yii::app()->session['logged'])) {
+//                $this->redirect(Yii::app()->createUrl('user/login'));
+//            }
+//        }
+//        return true;
+//    }
 
     public function actionIndex() {
         $this->render('index');
@@ -101,7 +101,7 @@ class OrderController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-       
+
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -183,6 +183,16 @@ class OrderController extends Controller {
 
     public function actionDeleteOrder() {
         
+    }
+
+    public function actionTestPushIos() {
+        $device_token = '04df1e72fa2c2fa73d59a3166b2935959a18610acb092a1402169deb209c5411';
+        IosPushHelper::sendNotification($device_token, 'test');
+    }
+
+    public function actionTestPushAndroid() {
+        $device_token = '';
+        GcmHelper::sendNotification($device_token, 'test');
     }
 
     // Uncomment the following methods and override them if needed

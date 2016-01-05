@@ -74,6 +74,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
+        'time_to_live' => 7776000,
     ),
     'theme' => 'classic',
         //'params' => include (dirname(__FILE__) . '/params.php'),

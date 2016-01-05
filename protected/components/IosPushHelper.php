@@ -10,8 +10,9 @@ class IosPushHelper {
 
     public static function sendNotification($device_token, $message) {
         $passphrase = '  ';
+        //  echo  dirname(__FILE__) . 'PushNotificationMeboo.pem';  die;
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', 'PushNotificationMeboo.pem');
+        stream_context_set_option($ctx, 'ssl', 'local_cert', dirname(__FILE__) . '/PushNotificationMeboo.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
@@ -22,13 +23,9 @@ class IosPushHelper {
             exit("Failed to connect: $err $errstr" . PHP_EOL);
         }
 
-        echo 'Connected to APNS' . PHP_EOL;
-
+        //    echo 'Connected to APNS' . PHP_EOL;
 // Create the payload body
-        $body['aps'] = array(
-            'alert' => $message,
-            'sound' => 'default'
-        );
+        $body['aps'] = $message;
 
 // Encode the payload as JSON
         $payload = json_encode($body);
@@ -40,9 +37,9 @@ class IosPushHelper {
         $result = fwrite($fp, $msg, strlen($msg));
 
         if (!$result) {
-            echo 'Message not delivered' . PHP_EOL;
+            //   echo 'Message not delivered' . PHP_EOL;
         } else {
-            echo 'Message successfully delivered' . PHP_EOL;
+            //   echo 'Message successfully delivered' . PHP_EOL;
         }
 
 // Close the connection to the server

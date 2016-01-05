@@ -110,12 +110,16 @@ class Util {
         $token = DeviceTk::model()->findByAttributes(array('device_token' => $device_token));
         if ($token) {
             $time_diff = time() - $token->updated_at;
-            if ($time_diff < Yii::app()->params['time_to_live']) {
+           // echo $time_diff; die;
+            if ($time_diff < 7776000) {
                 if ($status == 2 || $status == 4) {
+                  //  echo '2'; die;
                     if ($token->platform == 'android') {
-                        GcmHelper::sendNotification($device_token, $message);
-                    } else {
-                        IosPushHelper::sendNotification($device_token, $message);
+                        GcmHelper::sendNotification($device_token, $message['message_android']);
+                    } else if ($token->platform == 'ios') {
+                       // echo $device_token; die;
+                        
+                        IosPushHelper::sendNotification($device_token, $message['message_ios']);
                     }
                 }
             }

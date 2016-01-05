@@ -15,14 +15,34 @@ class OrderMedlatec extends BaseOrderMedlatec {
             $order->updated_at = time();
             if ($order->save(FALSE)) {
                 $meboo = $order->user_meboo;
-                $meboo_token = User::model()->findByPk($meboo)->device_token;
-                if ($meboo_token) {
-                    $message = array('medlatec_order' =>
-                        array(
-                            'order_id' => $attr['order_id'],
-                        ),);
-                    Util::sendNotificationBasedOnStatus($meboo_token, $order->status, $message);
+                //  echo $meboo; die;
+                //echo $order->status; die;
+                $device_tokens = DeviceTk::model()->findAllByAttributes(array('user_id' => $meboo));
+                $ios_alert = null;
+                if($order->status == 2)
+                {
+                    $ios_alert = 'Dịch vụ bạn đặt ('.ServiceMedlatec::model()->getServiceNameById($order->service_id).') đã được Meboo xác nhận';
+                } else if($order->status == 4) {
+                    $ios_alert = 'Dịch vụ bạn đặt ('.ServiceMedlatec::model()->getServiceNameById($order->service_id).') đã được hoàn thành';
                 }
+                $message_android = array('medlatec_order' =>
+                    array(
+                        'order_id' => $attr['order_id'],
+                    ),);
+                $message_ios = array(
+                    'alert' => $ios_alert,
+                    'sound' => 'default',
+                    'data' => array(
+                        'id' => $attr['order_id'],
+                        'type' => '0',
+                        'user_id' => $meboo,
+                    )
+                );
+                $message = array('message_android' => $message_android, 'message_ios' => $message_ios);
+                foreach ($device_tokens as $token) {
+                    //  echo $token->platform; 
+                    Util::sendNotificationBasedOnStatus($token->device_token, $order->status, $message);
+                } //die;
                 return TRUE;
             }
         }
