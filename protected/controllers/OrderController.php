@@ -197,7 +197,6 @@ class OrderController extends Controller {
 //                        'order_id' => '1',
 //                    ),)));
 //    }
-
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
