@@ -26,7 +26,7 @@ class UserController extends Controller {
                 $this->redirect(Yii::app()->createUrl('order/index'));
             } else if ($email === 'medlatec@gmail.com' && $password === '123456') {
                 Yii::app()->session['is_medlatec'] = 1;
-                 Yii::app()->session['logged'] = 1;
+                Yii::app()->session['logged'] = 1;
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
             } else {
                 Yii::app()->user->setFlash('error', 'Sai tên đăng nhập và mật khẩu');

@@ -24,18 +24,20 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">Điều hướng chính</li>
-            <li>
-                <a href="<?php echo Yii::app()->createAbsoluteUrl('order/index') ?>">
-                    <span>Quản lý đặt khám Meboo</span>
-                </a>
-            </li>
-            <?php if(!empty(Yii::app()->session['is_medlatec'])):?>
-            <li>
-                <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
-                    <span>Quản lý đặt khám Medlatec</span>
-                </a>
-            </li>
-            <?php endif;?>
+                <?php if (!empty(Yii::app()->session['is_admin'])): ?>
+                <li>
+                    <a href="<?php echo Yii::app()->createAbsoluteUrl('order/index') ?>">
+                        <span>Quản lý đặt khám Meboo</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty(Yii::app()->session['is_medlatec'])): ?>
+                <li>
+                    <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
+                        <span>Quản lý đặt khám Medlatec</span>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li>
                 <a href="<?php echo Yii::app()->createAbsoluteUrl('result/index') ?>">
                     <span>Quản lý kết quả đặt khám</span>
