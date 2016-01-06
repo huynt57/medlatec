@@ -17,6 +17,10 @@
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $service_price_after
+ * @property string $relative_favorable
+ * @property string $absolute_favorable
+ * @property string $condition
  *
  */
 abstract class BaseServiceMedlatec extends GxActiveRecord {
@@ -40,9 +44,9 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('status, created_at, updated_at', 'numerical', 'integerOnly'=>true),
-			array('service_name, service_price, favorable, description', 'safe'),
-			array('service_name, service_price, favorable, description, status, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, service_name, service_price, favorable, description, status, created_at, updated_at', 'safe', 'on'=>'search'),
+			array('service_name, service_price, favorable, description, service_price_after, relative_favorable, absolute_favorable, condition', 'safe'),
+			array('service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +70,10 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 			'status' => Yii::t('app', 'Status'),
 			'created_at' => Yii::t('app', 'Created At'),
 			'updated_at' => Yii::t('app', 'Updated At'),
+			'service_price_after' => Yii::t('app', 'Service Price After'),
+			'relative_favorable' => Yii::t('app', 'Relative Favorable'),
+			'absolute_favorable' => Yii::t('app', 'Absolute Favorable'),
+			'condition' => Yii::t('app', 'Condition'),
 		);
 	}
 
@@ -80,6 +88,10 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 		$criteria->compare('status', $this->status);
 		$criteria->compare('created_at', $this->created_at);
 		$criteria->compare('updated_at', $this->updated_at);
+		$criteria->compare('service_price_after', $this->service_price_after, true);
+		$criteria->compare('relative_favorable', $this->relative_favorable, true);
+		$criteria->compare('absolute_favorable', $this->absolute_favorable, true);
+		$criteria->compare('condition', $this->condition, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

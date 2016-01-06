@@ -15,8 +15,12 @@
                     <input type="text" class="form-control" id="service_price" name="service_price" >
                 </div>
                 <div class="form-group">
-                    <label for="favorable">Khuyến mãi</label>
-                    <input type="text" class="form-control" id="favorable" name="favorable" >
+                    <label for="relative_favorable">Khuyến mãi tương đối</label>
+                    <input type="text" class="form-control" id="relative_favorable" name="relative_favorable" >
+                </div>
+                <div class="form-group">
+                    <label for="absolute_favorable">Khuyến mãi tuyệt đối</label>
+                    <input type="text" class="form-control" id="absolute_favorable" name="absolute_favorable" >
                 </div>
 
             </div>
@@ -24,6 +28,14 @@
                 <div class="form-group">
                     <label for="description">Miêu tả</label>
                     <input type="text" class="form-control" id="description" name="description" >
+                </div>
+                <div class="form-group">
+                    <label for="condition">Điều kiện khuyến mại</label>
+                    <input type="text" class="form-control" id="condition" name="condition" >
+                </div>
+                <div class="form-group">
+                    <label for="service_price_after">Giá dịch vụ sau khuyến mại</label>
+                    <input type="text" class="form-control" id="service_price_after" name="service_price_after" >
                 </div>
                 <div class="form-group">
                     <label>Trạng thái</label>

@@ -7,9 +7,8 @@ class ServiceMedlatec extends BaseServiceMedlatec {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
-    public function getServiceNameById($service_id)
-    {
+
+    public function getServiceNameById($service_id) {
         $service = ServiceMedlatec::model()->findByPk($service_id);
         return $service->service_name;
     }
