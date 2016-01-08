@@ -11,6 +11,7 @@ class UploadHelper {
     public static function getUrlUploadSingleImage($obj, $user_id) {
         $ext_arr = array('png', 'jpg', 'jpeg', 'bmp', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx');
         $name = StringHelper::filterString($obj['name']);
+      //  $name = StringHelper::makeUrlString($name);
         $storeFolder = Yii::getPathOfAlias('webroot') . '/images/' . date('Y-m-d', time()) . '/' . $user_id . '/';
         $pathUrl = 'images/' . date('Y-m-d', time()) . '/' . $user_id . '/' . time() . $name;
         if (!file_exists($storeFolder)) {
@@ -35,6 +36,7 @@ class UploadHelper {
         foreach ($obj["tmp_name"] as $key => $tmp_name) {
             $ext_arr = array('png', 'jpg', 'jpeg', 'bmp', 'pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx');
             $name = StringHelper::filterString($obj['name'][$key]);
+          //  $name = StringHelper::makeUrlString($name);
             $storeFolder = Yii::getPathOfAlias('webroot') . '/images/' . date('Y-m-d', time()) . '/' . $user_id . '/';
             $pathUrl = 'images/' . date('Y-m-d', time()) . '/' . $user_id . '/' . time() . $name;
             if (!file_exists($storeFolder)) {

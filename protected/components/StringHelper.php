@@ -16,6 +16,24 @@ class StringHelper {
         return str_replace("\r\n", "\n", $string);
     }
 
+    public static function slugify($text) {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+        // trim
+        $text = trim($text, '-');
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        // lowercase
+        $text = strtolower($text);
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
     public static function generateRandomString($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
@@ -129,9 +147,8 @@ class StringHelper {
         }
         return $class;
     }
-    
-    public static function returnCategoryTypeName($type)
-    {
+
+    public static function returnCategoryTypeName($type) {
         $class = NULL;
         switch ($type) {
             case 1:
@@ -146,9 +163,8 @@ class StringHelper {
         }
         return $class;
     }
-    
-    public static function returnCategoryNameById($cat_id)
-    {
+
+    public static function returnCategoryNameById($cat_id) {
         $cat = Categories::model()->findByPk($cat_id);
         return $cat->cat_name;
     }
