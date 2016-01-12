@@ -54,19 +54,19 @@
                 </div>
                 <div class="form-group">
                     <label for="time_confirm">Thời gian xác nhận</label>
-                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo Date('d-m-Y', $data['time_confirm']) ?>"  >
+                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo Date('d-m-Y H:i', $data['time_confirm']) ?>"  >
                 </div>
                 <div class="form-group">
                     <label for="time_meet">Thời gian gặp</label>
-                    <input type="text" name="time_meet" class="form-control" id="time_meet" value="<?php echo Date('d-m-Y', $data['time_meet']) ?>" >
+                    <input type="text" name="time_meet" class="form-control" id="time_meet" value="<?php echo Date('d-m-Y H:i', $data['time_meet']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="created_at">Thời điểm tạo</label>
-                    <input type="text" name="created_at" class="form-control" id="created_at" disabled="" value="<?php echo Date('d-m-Y', $data['created_at']) ?>" >
+                    <input type="text" name="created_at" class="form-control" id="created_at" disabled="" value="<?php echo Date('d-m-Y H:i', $data['created_at']) ?>" >
                 </div>
                 <div class="form-group">
                     <label for="updated_at">Thời điểm cập nhật</label>
-                    <input type="text" name="updated_at" class="form-control" id="updated_at" disabled="" value="<?php echo Date('d-m-Y', $data['updated_at']) ?>" >
+                    <input type="text" name="updated_at" class="form-control" id="updated_at" disabled="" value="<?php echo Date('d-m-Y H:i', $data['updated_at']) ?>" >
                 </div>
 
                 <input type="hidden" name="order_id" value="<?php echo $data['id'] ?>" >

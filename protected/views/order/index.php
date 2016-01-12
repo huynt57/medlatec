@@ -175,11 +175,22 @@
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
         var url = base_url + '/order/edit?oid=' + order_id;
-        $.get(url, function (response) {
-            $('#edit-order-modal-content').html(response);
-            $('#time_confirm').datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
+//        $.get(url, function (response) {
+//            $('#edit-order-modal-content').html(response);
+//            $('#time_confirm').datepicker({
+//                dateFormat: 'yy-mm-dd'
+//            });
+//        });
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (response)
+            {
+                $('#edit-order-modal-content').html(response);
+                $('#time_confirm').datepicker({
+                    dateFormat: 'yy-mm-dd'
+                });
+            }
         });
 
     }
