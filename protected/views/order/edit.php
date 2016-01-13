@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="time_confirm">Thời gian xác nhận</label>
-                    <input type="text" name="time_confirm" class="form-control" id="time_confirm" value="<?php echo Date('d-m-Y H:i', $data['time_confirm']) ?>"  >
+                    <input type="text"  name="time_confirm" class="form-control" id="time_confirm" value="<?php echo Date('d-m-Y H:i', $data['time_confirm']) ?>"  >
                 </div>
                 <div class="form-group">
                     <label for="time_meet">Thời gian gặp</label>
@@ -81,10 +81,3 @@
     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Đóng</button>
     <button type="button" class="btn btn-primary" id="edit-order-submit">Lưu</button>
 </div>
-<script>
-    $(document).ready(function () {
-        $('body').on('focus', "#time_confirm", function () {
-            $(this).datepicker();
-        });
-    });
-</script>

@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datepicker/datepicker3.css">
         <!-- Daterange picker -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/daterangepicker/daterangepicker-bs3.css">
+         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datepicker/datetimepicker.css">
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
@@ -38,6 +39,12 @@
         <!-- jQuery UI 1.11.4 -->
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.toast.min.js"></script>
+        <!-- daterangepicker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- datepicker -->
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datepicker/datetimepicker.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -362,11 +369,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
         <!-- jQuery Knob Chart -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/knob/jquery.knob.js"></script>
-        <!-- daterangepicker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- datepicker -->
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+        
         <!-- Bootstrap WYSIHTML5 -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
         <!-- Slimscroll -->

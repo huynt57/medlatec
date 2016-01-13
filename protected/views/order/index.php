@@ -1,3 +1,8 @@
+<style>
+    .datepicker { 
+        z-index: 99999 !important; 
+    }
+</style>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -92,6 +97,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
         $(document).on('click', '#edit-order-submit', function () {
             var form = $('#form-edit-order');
             var data = form.serialize();
@@ -166,34 +172,36 @@
             });
         });
 
-        $('#time_confirm').datepicker({
-            dateFormat: 'yy-mm-dd'
-        });
+
     });
 
     function loadInfo(order_id)
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
         var url = base_url + '/order/edit?oid=' + order_id;
-//        $.get(url, function (response) {
-//            $('#edit-order-modal-content').html(response);
-//            $('#time_confirm').datepicker({
-//                dateFormat: 'yy-mm-dd'
-//            });
-//        });
         $.ajax({
             url: url,
             type: 'GET',
             success: function (response)
             {
                 $('#edit-order-modal-content').html(response);
-                $('#time_confirm').datepicker({
-                    dateFormat: 'yy-mm-dd'
+
+
+                $('#time_confirm').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
                 });
+                $('#time_meet').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+
+            },
+            complete: function () {
             }
         });
 
     }
+
+
 
     function loadInfoResult(order_id)
     {
@@ -201,6 +209,12 @@
         var url = base_url + '/order/result?oid=' + order_id;
         $.get(url, function (response) {
             $('#edit-order-result-modal-content').html(response);
+            $('#time_confirm').datetimepicker({
+                format: 'DD-MM-YYYY HH:mm:ss'
+            });
+            $('#time_meet').datetimepicker({
+                format: 'DD-MM-YYYY HH:mm:ss'
+            });
         });
     }
 </script>

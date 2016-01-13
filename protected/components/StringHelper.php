@@ -169,4 +169,10 @@ class StringHelper {
         return $cat->cat_name;
     }
 
+    public static function dateToTime($date) {
+        $date_convert = date($date);
+        $time = strtotime($date_convert);
+        return $time;
+    }
+
 }
