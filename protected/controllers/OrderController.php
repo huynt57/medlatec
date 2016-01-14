@@ -186,7 +186,7 @@ class OrderController extends Controller {
     }
 
 //    public function actionTestPushIos() {
-//        $device_token = '04df1e72fa2c2fa73d59a3166b2935959a18610acb092a1402169deb209c5411';
+//        $device_token = '7fde7c0e0cca5367d4dc777f555b6ee077ffe17ea74afebea4f1c54ae304abc0';
 //        IosPushHelper::sendNotification($device_token, 'test');
 //    }
 //

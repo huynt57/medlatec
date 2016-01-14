@@ -38,6 +38,10 @@
         <!-- jQuery UI 1.11.4 -->
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery.toast.min.js"></script>
+         <!-- DataTables -->
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/dataTableReload.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -381,8 +385,6 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/dist/js/demo.js"></script>
 
 
-        <!-- DataTables -->
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+       
     </body>
 </html>

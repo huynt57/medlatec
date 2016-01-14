@@ -81,10 +81,10 @@
             ]
         });
         $('#edit-order-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().ajax.reload();
+            $('#order_management').DataTable().fnStandingRedraw();
         });
         $('#edit-order-result-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().ajax.reload();
+            $('#order_management').DataTable().fnStandingRedraw();
         });
     });
 
