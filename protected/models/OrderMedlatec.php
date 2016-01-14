@@ -10,8 +10,11 @@ class OrderMedlatec extends BaseOrderMedlatec {
 
     public function updateOrder($attr) {
         $order = OrderMedlatec::model()->findByPk($attr['order_id']);
+       
         if ($order) {
             $order->setAttributes($attr);
+            $order->time_meet = StringHelper::dateToTime($attr['time_meet']);
+            $order->time_confirm = StringHelper::dateToTime($attr['time_confirm']);
             $order->updated_at = time();
             if ($order->save(FALSE)) {
                 $meboo = $order->user_meboo;

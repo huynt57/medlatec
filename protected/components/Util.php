@@ -106,19 +106,35 @@ class Util {
         );
     }
 
+    public static function getStatusValueMeboo() {
+        return array(
+            '-1' => 'Đã hủy',
+            '0' => 'Đã yêu cầu',
+            '1' => 'Đã xác nhận',
+        );
+    }
+
+    public static function getStatusValueMedlatec() {
+        return array(
+            '2' => 'Đã đặt',
+            '3' => 'Đang đợi kết quả',
+            '4' => 'Đã hoàn thành',
+        );
+    }
+
     public static function sendNotificationBasedOnStatus($device_token, $status, $message) {
         $token = DeviceTk::model()->findByAttributes(array('device_token' => $device_token));
         if ($token) {
             $time_diff = time() - $token->updated_at;
-           // echo $time_diff; die;
+            // echo $time_diff; die;
             if ($time_diff < 7776000) {
                 if ($status == 2 || $status == 4) {
-                  //  echo '2'; die;
+                    //  echo '2'; die;
                     if ($token->platform == 'android') {
                         GcmHelper::sendNotification($device_token, $message['message_android']);
                     } else if ($token->platform == 'ios') {
-                       // echo $device_token; die;
-                        
+                        // echo $device_token; die;
+
                         IosPushHelper::sendNotification($device_token, $message['message_ios']);
                     }
                 }
