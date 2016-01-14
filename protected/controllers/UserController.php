@@ -20,16 +20,20 @@ class UserController extends Controller {
         if (isset($_POST)) {
             $email = StringHelper::filterString($request->getPost('email'));
             $password = StringHelper::filterString($request->getPost('password'));
-            if ($email === 'test@gmail.com' && $password === '123456') {
-                Yii::app()->session['is_admin'] = 1;
+            if ($email === 'meboo.admin@gmail.com' && $password === '123456') {
+                Yii::app()->session['meboo_admin'] = 'meboo_admin';
                 Yii::app()->session['logged'] = 1;
                 $this->redirect(Yii::app()->createUrl('order/index'));
             } else if ($email === 'medlatec@gmail.com' && $password === '123456') {
-                Yii::app()->session['is_medlatec'] = 1;
+                Yii::app()->session['medlatec_staff'] = 'medlatec_staff';
+                Yii::app()->session['logged'] = 1;
+                $this->redirect(Yii::app()->createUrl('orderMed/index'));
+            } else if ($email === 'medlactec.admin@gmail.com' && $password === '123456') {
+                Yii::app()->session['medlatec_admin'] = 'medlatec_admin';
                 Yii::app()->session['logged'] = 1;
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
             } else if ($email === 'meboo@gmail.com' && $password === '123456') {
-                Yii::app()->session['is_meboo'] = 1;
+                Yii::app()->session['meboo_staff'] = 'meboo_staff';
                 Yii::app()->session['logged'] = 1;
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
             } else {

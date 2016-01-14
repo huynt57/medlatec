@@ -70,6 +70,12 @@ class Util {
     public static function getStatus($status) {
         $name = NULL;
         switch ($status) {
+            case -3:
+                $name = 'Phê duyệt';
+                break;
+            case -2:
+                $name = 'Chờ phê duyệt';
+                break;
             case -1:
                 $name = 'Đã hủy';
                 break;
@@ -120,6 +126,25 @@ class Util {
             '3' => 'Đang đợi kết quả',
             '4' => 'Đã hoàn thành',
         );
+    }
+
+    public static function getStatusValueServiceMedlatec($permision) {
+        $status = null;
+        switch ($permision) {
+            case 'meboo_admin':
+                $status = array(
+                    '-3' => 'Phê duyệt',
+                    '-2' => 'Chờ phê duyệt',
+                );
+                break;
+            case 'meboo_staff':
+                break;
+            case 'medlatec_admin':
+                break;
+            case 'medlatec_staff':
+                break;
+        }
+        return $status;
     }
 
     public static function sendNotificationBasedOnStatus($device_token, $status, $message) {

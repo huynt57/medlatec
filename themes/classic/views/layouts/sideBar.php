@@ -24,14 +24,14 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">Điều hướng chính</li>
-                <?php if (!empty(Yii::app()->session['is_admin'])): ?>
+                <?php if (!empty(Yii::app()->session['meboo_staff'])): ?>
                 <li>
                     <a href="<?php echo Yii::app()->createAbsoluteUrl('order/index') ?>">
                         <span>Quản lý đặt khám Meboo</span>
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if (!empty(Yii::app()->session['is_medlatec'])): ?>
+            <?php if (!empty(Yii::app()->session['medlatec_staff'])): ?>
                 <li>
                     <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
                         <span>Quản lý đặt khám Medlatec</span>
