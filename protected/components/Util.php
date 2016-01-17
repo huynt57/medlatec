@@ -128,18 +128,24 @@ class Util {
         );
     }
 
-    public static function getStatusValueServiceMedlatec($permision) {
+    public static function getStatusValueOrderMedlatec($permision) {
         $status = null;
         switch ($permision) {
             case 'meboo_admin':
                 $status = array(
-                    '-3' => 'Phê duyệt',
-                    '-2' => 'Chờ phê duyệt',
+                    '-1' => 'Đã hủy',
+                    '0' => 'Đã yêu cầu',
+                    '1' => 'Đã xác nhận',
                 );
                 break;
             case 'meboo_staff':
                 break;
             case 'medlatec_admin':
+                $status = array(
+                    '2' => 'Đã đặt',
+                    '3' => 'Đang đợi kết quả',
+                    '4' => 'Đã hoàn thành',
+                );
                 break;
             case 'medlatec_staff':
                 break;

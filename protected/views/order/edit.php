@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <label>Trạng thái</label>
                     <select class="form-control" name="status">
-                        <?php foreach (Util::getStatusValue() as $key => $value): ?>
+                        <?php foreach (Util::getStatusValueOrderMedlatec(Yii::app()->session['type']) as $key => $value): ?>
                             <option value="<?php echo $key ?>" <?php
                             if ($data['status'] == $key):
                                 ?>  selected=""

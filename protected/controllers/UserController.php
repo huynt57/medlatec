@@ -23,18 +23,22 @@ class UserController extends Controller {
             if ($email === 'meboo.admin@gmail.com' && $password === '123456') {
                 Yii::app()->session['meboo_admin'] = 'meboo_admin';
                 Yii::app()->session['logged'] = 1;
+                Yii::app()->session['type'] = 'meboo_admin';
                 $this->redirect(Yii::app()->createUrl('order/index'));
             } else if ($email === 'medlatec@gmail.com' && $password === '123456') {
                 Yii::app()->session['medlatec_staff'] = 'medlatec_staff';
                 Yii::app()->session['logged'] = 1;
+                Yii::app()->session['type'] = 'medlatec_staff';
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
-            } else if ($email === 'medlactec.admin@gmail.com' && $password === '123456') {
+            } else if ($email === 'medlatec.admin@gmail.com' && $password === '123456') {
                 Yii::app()->session['medlatec_admin'] = 'medlatec_admin';
                 Yii::app()->session['logged'] = 1;
+                Yii::app()->session['type'] = 'medlatec_admin';
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
             } else if ($email === 'meboo@gmail.com' && $password === '123456') {
                 Yii::app()->session['meboo_staff'] = 'meboo_staff';
                 Yii::app()->session['logged'] = 1;
+                Yii::app()->session['type'] = 'meboo_staff';
                 $this->redirect(Yii::app()->createUrl('orderMed/index'));
             } else {
                 Yii::app()->user->setFlash('error', 'Sai tên đăng nhập và mật khẩu');
