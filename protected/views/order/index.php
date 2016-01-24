@@ -182,6 +182,10 @@
         $.ajax({
             url: url,
             type: 'GET',
+            beforeSend: function () {
+                $('#edit-order-modal-content').addClass('blur-loading');
+                //   console.log(formdata);
+            },
             success: function (response)
             {
                 $('#edit-order-modal-content').html(response);
@@ -196,6 +200,7 @@
 
             },
             complete: function () {
+                $('#edit-order-modal-content').removeClass('blur-loading');
             }
         });
 
@@ -207,14 +212,28 @@
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
         var url = base_url + '/order/result?oid=' + order_id;
-        $.get(url, function (response) {
-            $('#edit-order-result-modal-content').html(response);
-            $('#time_confirm').datetimepicker({
-                format: 'DD-MM-YYYY HH:mm:ss'
-            });
-            $('#time_meet').datetimepicker({
-                format: 'DD-MM-YYYY HH:mm:ss'
-            });
+        $.ajax({
+            url: url,
+            type: 'GET',
+            beforeSend: function () {
+                $('#edit-order-result-modal-content').addClass('blur-loading');
+                //   console.log(formdata);
+            },
+            success: function (response)
+            {
+                $('#edit-order-result-modal-content').html(response);
+                $('#time_confirm').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+                $('#time_meet').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+
+            },
+            complete: function () {
+                $('#edit-order-result-modal-content').removeClass('blur-loading');
+            }
         });
+
     }
 </script>

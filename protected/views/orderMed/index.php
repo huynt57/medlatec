@@ -175,21 +175,62 @@
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
         var url = base_url + '/order/edit?oid=' + order_id;
-        $.get(url, function (response) {
-            $('#edit-order-modal-content').html(response);
-            $('#time_confirm').datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
+        $.ajax({
+            url: url,
+            type: 'GET',
+            beforeSend: function () {
+                $('#edit-order-modal-content').addClass('blur-loading');
+                //   console.log(formdata);
+            },
+            success: function (response)
+            {
+                $('#edit-order-modal-content').html(response);
+
+
+                $('#time_confirm').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+                $('#time_meet').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+
+            },
+            complete: function () {
+                $('#edit-order-modal-content').removeClass('blur-loading');
+            }
         });
 
     }
+
+
 
     function loadInfoResult(order_id)
     {
         var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
         var url = base_url + '/order/result?oid=' + order_id;
-        $.get(url, function (response) {
-            $('#edit-order-result-modal-content').html(response);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            beforeSend: function () {
+                $('#edit-order-result-modal-content').addClass('blur-loading');
+                //   console.log(formdata);
+            },
+            success: function (response)
+            {
+                $('#edit-order-result-modal-content').html(response);
+                $('#time_confirm').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+                $('#time_meet').datetimepicker({
+                    format: 'DD-MM-YYYY HH:mm:ss'
+                });
+
+            },
+            complete: function () {
+                $('#edit-order-result-modal-content').removeClass('blur-loading');
+            }
         });
+
     }
+</script>
 </script>

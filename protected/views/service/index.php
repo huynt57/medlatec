@@ -78,17 +78,19 @@
                                 <label for="description">Miêu tả</label>
                                 <input type="text" class="form-control" id="description" name="description" >
                             </div>
-                            <div class="form-group">
-                                <label>Trạng thái</label>
-                                <select class="form-control" name="status">
-                                    <?php foreach (Util::getStatusValue() as $key => $value): ?>
-                                        <option value="<?php echo $key ?>" <?php
-                                        if ($data['status'] == $key):
-                                            ?>  selected=""
-                                                <?php endif; ?>><?php echo $value ?></option>
-                                            <?php endforeach; ?>
-                                </select>                           
-                            </div>
+                            <?php if(Yii::app()->session['type'] == 'meboo_admin'):?>
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select class="form-control" name="status">
+                        <?php foreach (Util::getStatusServiceMedlatec(Yii::app()->session['type']) as $key => $value): ?>
+                            <option value="<?php echo $key ?>" <?php
+                            if ($data['status'] == $key):
+                                ?>  selected=""
+                                    <?php endif; ?>><?php echo $value ?></option>
+                                <?php endforeach; ?>
+                    </select>                           
+                </div>
+                <?php endif;?>
                         </div>
 
                     </div><!-- /.box-body -->

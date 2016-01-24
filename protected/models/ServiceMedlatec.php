@@ -18,7 +18,7 @@ class ServiceMedlatec extends BaseServiceMedlatec {
         if ($result) {
             $result->setAttributes($attr);
             $result->updated_at = time();
-            $result->status = -2;
+        //    $result->status = -2;
             if ($result->save(FALSE)) {
                 return TRUE;
             }
@@ -31,7 +31,7 @@ class ServiceMedlatec extends BaseServiceMedlatec {
         $model->setAttributes($attr);
         $model->updated_at = time();
         $model->created_at = time();
-        $model->status = -3;
+        $model->status = -2;
         if ($model->save(FALSE)) {
             return TRUE;
         }

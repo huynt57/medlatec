@@ -63,10 +63,10 @@ class OrderMedController extends Controller {
             $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['status'] = $item->status;
             $itemArr['status_name'] = Util::getStatusLabel($item->status);
-            $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
-            $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
-            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
-            $action.=' <a data-toggle="modal" href="' . $result_url . '" data-target="#edit-order-result-modal" onclick=loadInfoResult(' . $item->id . ')><span class="label label-info">Thêm kết quả</span></a>';
+        //    $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+          //  $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
+            $action = '<a data-toggle="modal" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
+            $action.=' <a data-toggle="modal" data-target="#edit-order-result-modal" onclick=loadInfoResult(' . $item->id . ')><span class="label label-info">Thêm kết quả</span></a>';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
         }

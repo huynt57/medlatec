@@ -42,6 +42,12 @@ class Util {
     public static function getStatusLabel($status) {
         $name = NULL;
         switch ($status) {
+            case -3:
+                $name = '<span class="label label-info">Phê duyệt</span>';
+                break;
+            case -2:
+                $name = '<span class="label label-default">Chờ phê duyệt</span>';
+                break;
             case -1:
                 $name = '<span class="label label-danger">Đã hủy</span>';
                 break;
@@ -94,7 +100,7 @@ class Util {
             case 4:
                 $name = 'Đã hoàn thành';
                 break;
-            default :
+            default:
                 $name = 'Chưa xác định';
                 break;
         }
@@ -146,6 +152,25 @@ class Util {
                     '3' => 'Đang đợi kết quả',
                     '4' => 'Đã hoàn thành',
                 );
+                break;
+            case 'medlatec_staff':
+                break;
+        }
+        return $status;
+    }
+
+    public static function getStatusServiceMedlatec($permision) {
+        $status = null;
+        switch ($permision) {
+            case 'meboo_admin':
+                $status = array(
+                    '-3' => 'Phê duyệt',
+                    '-2' => 'Chờ phê duyệt'
+                );
+                break;
+            case 'meboo_staff':
+                break;
+            case 'medlatec_admin':
                 break;
             case 'medlatec_staff':
                 break;

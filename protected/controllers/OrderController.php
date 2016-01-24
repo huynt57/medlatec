@@ -60,8 +60,8 @@ class OrderController extends Controller {
             $itemArr['requirement'] = $item->requirement;
             $itemArr['created_at'] = $item->created_at;
             $itemArr['status'] = $item->status;
-            $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
-            $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
+         //   $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            $action = '<a data-toggle="modal" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
             $action.='';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
