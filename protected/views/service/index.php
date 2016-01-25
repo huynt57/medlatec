@@ -71,26 +71,26 @@
                                 <label for="favorable">Khuyến mãi</label>
                                 <input type="text" class="form-control" id="favorable" name="favorable" >
                             </div>
-
+                            <input type="hidden" name="type" value="<?php echo Yii::app()->session['type'] ?>">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="description">Miêu tả</label>
-                                <input type="text" class="form-control" id="description" name="description" >
+                                <textarea type="text" class="form-control" id="description" name="description" rows="6"></textarea>
                             </div>
-                            <?php if(Yii::app()->session['type'] == 'meboo_admin'):?>
-                <div class="form-group">
-                    <label>Trạng thái</label>
-                    <select class="form-control" name="status">
-                        <?php foreach (Util::getStatusServiceMedlatec(Yii::app()->session['type']) as $key => $value): ?>
-                            <option value="<?php echo $key ?>" <?php
-                            if ($data['status'] == $key):
-                                ?>  selected=""
-                                    <?php endif; ?>><?php echo $value ?></option>
-                                <?php endforeach; ?>
-                    </select>                           
-                </div>
-                <?php endif;?>
+                            <?php if (Yii::app()->session['type'] == 'meboo_admin'): ?>
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select class="form-control" name="status">
+                                        <?php foreach (Util::getStatusServiceMedlatec(Yii::app()->session['type']) as $key => $value): ?>
+                                            <option value="<?php echo $key ?>" <?php
+                                            if ($data['status'] == $key):
+                                                ?>  selected=""
+                                                    <?php endif; ?>><?php echo $value ?></option>
+                                                <?php endforeach; ?>
+                                    </select>                           
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                     </div><!-- /.box-body -->
