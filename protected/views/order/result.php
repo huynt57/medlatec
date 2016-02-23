@@ -28,19 +28,29 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="doctor">Bác sĩ</label>
-                    <input type="text" name="doctor" class="form-control" id="doctor"   >
+                    <input type="text" name="doctor" class="form-control" id="doctor" value="<?php if (isset($result)) echo $result->doctor ?>"  >
                 </div>
                 <div class="form-group">
                     <label for="diagnose">Chẩn đoán</label>
-                    <input  type="text" name="diagnose" class="form-control" id="diagnose"   >
+                    <input  type="text" name="diagnose" class="form-control" id="diagnose" value="<?php if (isset($result)) echo $result->diagnose ?>"  >
                 </div>
+                <!--                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select class="form-control" name="status" id="status">
+                <?php foreach (Util::getStatusValue() as $key => $value): ?>
+                                                        <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                <?php endforeach; ?>
+                                    </select>
+                                </div>-->
                 <div class="form-group">
-                    <label>Trạng thái</label>
-                    <select class="form-control" name="status" id="status">
-                        <?php foreach (Util::getStatusValue() as $key => $value): ?>
-                            <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                    <label for="file">Các file đã đính kèm </label>
+                    <ul>
+                          <?php $i = 1 ?>
+                        <?php foreach ($files as $file): ?>
+                          
+                        <li><a href="<?php echo $file->url ?>" target="_blank">File <?php echo $i++ ?></a></li>
                         <?php endforeach; ?>
-                    </select>
+                    </ul>
                 </div>
                 <div class="form-group">
                     <label for="file">File đính kèm </label>
@@ -48,6 +58,7 @@
 
                     <p class="help-block">Có thể đính nhiều file</p>
                 </div>
+
                 <input type="hidden" id="order_id" name="order_id" value="<?php echo $data['id'] ?>" >
             </div>
 

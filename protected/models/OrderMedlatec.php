@@ -10,7 +10,7 @@ class OrderMedlatec extends BaseOrderMedlatec {
 
     public function updateOrder($attr) {
         $order = OrderMedlatec::model()->findByPk($attr['order_id']);
-       
+
         if ($order) {
             $order->setAttributes($attr);
             $order->time_meet = StringHelper::dateToTime($attr['time_meet']);
@@ -22,11 +22,10 @@ class OrderMedlatec extends BaseOrderMedlatec {
                 //echo $order->status; die;
                 $device_tokens = DeviceTk::model()->findAllByAttributes(array('user_id' => $meboo));
                 $ios_alert = null;
-                if($order->status == 2)
-                {
-                    $ios_alert = 'Dịch vụ bạn đặt ('.ServiceMedlatec::model()->getServiceNameById($order->service_id).') đã được Meboo xác nhận';
-                } else if($order->status == 4) {
-                    $ios_alert = 'Dịch vụ bạn đặt ('.ServiceMedlatec::model()->getServiceNameById($order->service_id).') đã được hoàn thành';
+                if ($order->status == 2) {
+                    $ios_alert = 'Dịch vụ bạn đặt (' . ServiceMedlatec::model()->getServiceNameById($order->service_id) . ') đã được Meboo xác nhận';
+                } else if ($order->status == 4) {
+                    $ios_alert = 'Dịch vụ bạn đặt (' . ServiceMedlatec::model()->getServiceNameById($order->service_id) . ') đã được hoàn thành';
                 }
                 $message_android = array('medlatec_order' =>
                     array(
@@ -69,6 +68,20 @@ class OrderMedlatec extends BaseOrderMedlatec {
         $itemArr['service_name'] = $service_name;
 
         return $itemArr;
+    }
+
+    public function deleteOrder($order_id) {
+        $flag = TRUE;
+        $results = ResultMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
+        $order = OrderMedlatec::model()->findByPk($order_id);
+        $order->delete();
+        foreach ($results as $item) {
+            $file = ResultFile::model()->findByAttributes(array('result_id' => $item->id));
+            if (!$file->delete() || !$item->delete()) {
+                $flag = FALSE;
+            }
+        }
+        return $flag;
     }
 
 }
