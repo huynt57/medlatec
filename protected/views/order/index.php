@@ -60,6 +60,14 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="delete-order-modal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="delete-order-modal-content">
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 
 
 <script>
@@ -86,10 +94,13 @@
             ]
         });
         $('#edit-order-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().fnStandingRedraw();
+            $('#order_management').DataTable().ajax.reload();
+        });
+        $('#delete-order-modal').on('hidden.bs.modal', function () {
+            $('#order_management').DataTable().ajax.reload();
         });
         $('#edit-order-result-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().fnStandingRedraw();
+            $('#order_management').DataTable().ajax.reload();
         });
     });
 
@@ -122,6 +133,34 @@
                 },
                 complete: function () {
                     $('#edit-order-modal').removeClass('blur-loading');
+                }
+            });
+        });
+
+        $(document).on('click', '#delete-order-submit', function () {
+            var form = $('#form-delete-order');
+            var data = form.serialize();
+
+            $.ajax({
+                beforeSend: function () {
+                    $('#delete-order-modal').addClass('blur-loading');
+                },
+                dataType: 'json',
+                url: '<?php echo Yii::app()->createUrl('order/deleteProcess') ?>',
+                method: 'POST',
+                data: data,
+                success: function (response)
+                {
+                    if (response.status === 1) {
+                        // Show success message
+                        displayMessage('tt', 1);
+                    } else {
+                        // Show error message
+                        displayMessage('tt', 0);
+                    }
+                },
+                complete: function () {
+                    $('#delete-order-modal').removeClass('blur-loading');
                 }
             });
         });
@@ -232,6 +271,30 @@
             },
             complete: function () {
                 $('#edit-order-result-modal-content').removeClass('blur-loading');
+            }
+        });
+
+    }
+
+    function loadInfoDelete(order_id)
+    {
+        var base_url = '<?php echo Yii::app()->request->baseUrl; ?>';
+        var url = base_url + '/order/deleteOrder?order_id=' + order_id;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            beforeSend: function () {
+                $('#delete-order-modal-content').addClass('blur-loading');
+                //   console.log(formdata);
+            },
+            success: function (response)
+            {
+                $('#delete-order-modal-content').html(response);
+
+
+            },
+            complete: function () {
+                $('#delete-order-modal-content').removeClass('blur-loading');
             }
         });
 

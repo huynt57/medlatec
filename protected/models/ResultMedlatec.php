@@ -8,6 +8,12 @@ class ResultMedlatec extends BaseResultMedlatec {
         return parent::model($className);
     }
 
+    public function getResultByOrder($order_id) {
+        $result = ResultMedlatec::model()->findByAttributes(array('order_id' => $order_id));
+        $files = ResultFile::model()->findAllByAttributes(array('resukt_id' => $result->id));
+        return array('result' => $result, 'files' => $files);
+    }
+
     public function updateResult($attr, $urlArr) {
         $result = ResultMedlatec::model()->findByPk($attr['result_id']);
         if ($result) {

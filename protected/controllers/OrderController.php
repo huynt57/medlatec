@@ -60,7 +60,7 @@ class OrderController extends Controller {
             $itemArr['requirement'] = $item->requirement;
             $itemArr['created_at'] = $item->created_at;
             $itemArr['status'] = $item->status;
-         //   $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            //   $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
             $action = '<a data-toggle="modal" data-target="#edit-order-modal"><span class="label label-primary">Sửa</span></a>';
             $action.='';
             $itemArr['action'] = $action;
@@ -116,9 +116,10 @@ class OrderController extends Controller {
             $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['status'] = $item->status;
             $itemArr['status_name'] = Util::getStatusLabel($item->status);
-            $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
-            $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
+            // $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            // $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
             $action = '<a data-toggle="modal" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
+            $action .= ' <a data-toggle="modal" data-target="#delete-order-modal" onclick=loadInfoDelete(' . $item->id . ')><span class="label label-danger">Xóa</span></a>';
             $action.=' <a data-toggle="modal" data-target="#edit-order-result-modal" onclick=loadInfoResult(' . $item->id . ')><span class="label label-info">Thêm kết quả</span></a>';
             $itemArr['action'] = $action;
             $returnArr[] = $itemArr;
@@ -128,6 +129,16 @@ class OrderController extends Controller {
             "recordsFiltered" => $count));
     }
 
+    public function actionDeleteProcess() {
+        $order_id = StringHelper::filterString(Yii::app()->request->getPost('order_id'));
+        $result = OrderMedlatec::model()->deleteOrder($order_id);
+        if ($result) {
+            ResponseHelper::JsonReturnSuccess('', 'Delete success');
+        } else {
+            ResponseHelper::JsonReturnError('', 'Delete failed');
+        }
+    }
+
     public function actionEdit() {
         $request = Yii::app()->request;
         $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
@@ -135,6 +146,7 @@ class OrderController extends Controller {
         $order_id = StringHelper::filterString($request->getQuery('oid'));
         $data = OrderMedlatec::model()->getOrderDetail($order_id);
         $services = ServiceMedlatec::model()->findAll();
+
         $this->render('edit', array('data' => $data, 'services' => $services));
     }
 
@@ -154,7 +166,15 @@ class OrderController extends Controller {
         $this->layout = 'main_modal';
         $order_id = StringHelper::filterString($request->getQuery('oid'));
         $data = OrderMedlatec::model()->getOrderDetail($order_id);
-        $this->render('result', array('data' => $data));
+        $result = ResultMedlatec::model()->findByAttributes(array('order_id' => $order_id));
+        if ($result) {
+            $files = ResultFile::model()->findAllByAttributes(array('result_id' => $result->id));
+        }
+        if (isset($result) && isset($files)) {
+            $this->render('result', array('data' => $data, 'result' => $result, 'files' => $files));
+        } else {
+            $this->render('result', array('data' => $data));
+        }
     }
 
     public function actionUpdateResult() {
@@ -182,7 +202,12 @@ class OrderController extends Controller {
     }
 
     public function actionDeleteOrder() {
-        
+        $request = Yii::app()->request;
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_modal';
+        $order_id = StringHelper::filterString($request->getQuery('order_id'));
+
+        $this->render('deleteOrder', array('data' => $order_id));
     }
 
 //    public function actionTestPushIos() {
