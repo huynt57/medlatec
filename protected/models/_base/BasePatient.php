@@ -16,6 +16,13 @@
  * @property string $last_updated
  * @property string $relationshipWithUser
  * @property string $bloodType
+ * @property string $district
+ * @property string $province
+ * @property string $ward
+ * @property string $email
+ * @property string $phone
+ * @property string $address
+ * @property string $identity
  *
  */
 abstract class BasePatient extends GxActiveRecord {
@@ -38,11 +45,11 @@ abstract class BasePatient extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('name, dob, gender', 'length', 'max'=>255),
+			array('name, dob, gender, district, province, ward, email, phone, identity', 'length', 'max'=>255),
 			array('last_updated', 'length', 'max'=>200),
-			array('relationshipWithUser, bloodType', 'safe'),
-			array('name, dob, gender, last_updated, relationshipWithUser, bloodType', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('patient_id, name, dob, gender, last_updated, relationshipWithUser, bloodType', 'safe', 'on'=>'search'),
+			array('relationshipWithUser, bloodType, address', 'safe'),
+			array('name, dob, gender, last_updated, relationshipWithUser, bloodType, district, province, ward, email, phone, address, identity', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('patient_id, name, dob, gender, last_updated, relationshipWithUser, bloodType, district, province, ward, email, phone, address, identity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +72,13 @@ abstract class BasePatient extends GxActiveRecord {
 			'last_updated' => Yii::t('app', 'Last Updated'),
 			'relationshipWithUser' => Yii::t('app', 'Relationship With User'),
 			'bloodType' => Yii::t('app', 'Blood Type'),
+			'district' => Yii::t('app', 'District'),
+			'province' => Yii::t('app', 'Province'),
+			'ward' => Yii::t('app', 'Ward'),
+			'email' => Yii::t('app', 'Email'),
+			'phone' => Yii::t('app', 'Phone'),
+			'address' => Yii::t('app', 'Address'),
+			'identity' => Yii::t('app', 'Identity'),
 		);
 	}
 
@@ -78,6 +92,13 @@ abstract class BasePatient extends GxActiveRecord {
 		$criteria->compare('last_updated', $this->last_updated, true);
 		$criteria->compare('relationshipWithUser', $this->relationshipWithUser, true);
 		$criteria->compare('bloodType', $this->bloodType, true);
+		$criteria->compare('district', $this->district, true);
+		$criteria->compare('province', $this->province, true);
+		$criteria->compare('ward', $this->ward, true);
+		$criteria->compare('email', $this->email, true);
+		$criteria->compare('phone', $this->phone, true);
+		$criteria->compare('address', $this->address, true);
+		$criteria->compare('identity', $this->identity, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

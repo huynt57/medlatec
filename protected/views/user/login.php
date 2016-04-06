@@ -17,7 +17,7 @@
             <?php endif; ?>
         </div>
         <div class="login-logo">
-            <b>Quản trị</b> Medlatec
+            <b>Quản trị</b> Provider
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Đăng nhập để bắt đầu phiên làm việc của bạn</p>

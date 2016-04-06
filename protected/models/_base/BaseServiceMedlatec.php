@@ -21,6 +21,7 @@
  * @property string $relative_favorable
  * @property string $absolute_favorable
  * @property string $condition
+ * @property integer $provider_id
  *
  */
 abstract class BaseServiceMedlatec extends GxActiveRecord {
@@ -43,10 +44,10 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('status, created_at, updated_at', 'numerical', 'integerOnly'=>true),
+			array('status, created_at, updated_at, provider_id', 'numerical', 'integerOnly'=>true),
 			array('service_name, service_price, favorable, description, service_price_after, relative_favorable, absolute_favorable, condition', 'safe'),
-			array('service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition', 'safe', 'on'=>'search'),
+			array('service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition, provider_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition, provider_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,6 +75,7 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 			'relative_favorable' => Yii::t('app', 'Relative Favorable'),
 			'absolute_favorable' => Yii::t('app', 'Absolute Favorable'),
 			'condition' => Yii::t('app', 'Condition'),
+			'provider_id' => Yii::t('app', 'Provider'),
 		);
 	}
 
@@ -92,6 +94,7 @@ abstract class BaseServiceMedlatec extends GxActiveRecord {
 		$criteria->compare('relative_favorable', $this->relative_favorable, true);
 		$criteria->compare('absolute_favorable', $this->absolute_favorable, true);
 		$criteria->compare('condition', $this->condition, true);
+		$criteria->compare('provider_id', $this->provider_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

@@ -26,6 +26,8 @@
  * @property integer $service_id
  * @property integer $time_confirm
  * @property integer $time_meet
+ * @property string $price
+ * @property integer $provider_id
  *
  */
 abstract class BaseOrderMedlatec extends GxActiveRecord {
@@ -48,11 +50,11 @@ abstract class BaseOrderMedlatec extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'numerical', 'integerOnly'=>true),
+			array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, provider_id', 'numerical', 'integerOnly'=>true),
 			array('name, phone, email, ward, province, district', 'length', 'max'=>255),
-			array('address, requirement', 'safe'),
-			array('name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'safe', 'on'=>'search'),
+			array('address, requirement, price', 'safe'),
+			array('name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price, provider_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price, provider_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +87,8 @@ abstract class BaseOrderMedlatec extends GxActiveRecord {
 			'service_id' => Yii::t('app', 'Service'),
 			'time_confirm' => Yii::t('app', 'Time Confirm'),
 			'time_meet' => Yii::t('app', 'Time Meet'),
+			'price' => Yii::t('app', 'Price'),
+			'provider_id' => Yii::t('app', 'Provider'),
 		);
 	}
 
@@ -108,6 +112,8 @@ abstract class BaseOrderMedlatec extends GxActiveRecord {
 		$criteria->compare('service_id', $this->service_id);
 		$criteria->compare('time_confirm', $this->time_confirm);
 		$criteria->compare('time_meet', $this->time_meet);
+		$criteria->compare('price', $this->price, true);
+		$criteria->compare('provider_id', $this->provider_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

@@ -47,7 +47,7 @@ class OrderController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $criteria->condition = 'status = 1';
+        $criteria->condition = 'status = 1 AND provider_id = ' . Yii::app()->session['provider_id'];
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -209,8 +209,6 @@ class OrderController extends Controller {
 
         $this->render('deleteOrder', array('data' => $order_id));
     }
-    
-    
 
 //    public function actionTestPushIos() {
 //        $device_token = '7fde7c0e0cca5367d4dc777f555b6ee077ffe17ea74afebea4f1c54ae304abc0';

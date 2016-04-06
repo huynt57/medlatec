@@ -31,10 +31,10 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if (!empty(Yii::app()->session['medlatec_admin'])): ?>
+            <?php if (!empty(Yii::app()->session['provider_admin'])): ?>
                 <li>
                     <a href="<?php echo Yii::app()->createAbsoluteUrl('orderMed/index') ?>">
-                        <span>Quản lý đặt khám Medlatec</span>
+                        <span>Quản lý đặt khám Đối tác</span>
                     </a>
                 </li>
             <?php endif; ?>

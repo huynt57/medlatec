@@ -48,6 +48,7 @@ class ServiceController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
+        $criteria->condition = "provider_id = " . Yii::app()->session['provider_id'];
         $data = ServiceMedlatec::model()->findAll($criteria);
         $returnArr = array();
         foreach ($data as $item) {

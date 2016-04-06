@@ -20,6 +20,7 @@
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $order_id
+ * @property integer $provider_id
  *
  */
 abstract class BaseResultMedlatec extends GxActiveRecord {
@@ -42,11 +43,11 @@ abstract class BaseResultMedlatec extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('service, status, created_at, updated_at, order_id', 'numerical', 'integerOnly'=>true),
+			array('service, status, created_at, updated_at, order_id, provider_id', 'numerical', 'integerOnly'=>true),
 			array('patient_name, time, doctor', 'length', 'max'=>255),
 			array('diagnose, file', 'safe'),
-			array('patient_name, service, time, doctor, diagnose, file, status, created_at, updated_at, order_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, patient_name, service, time, doctor, diagnose, file, status, created_at, updated_at, order_id', 'safe', 'on'=>'search'),
+			array('patient_name, service, time, doctor, diagnose, file, status, created_at, updated_at, order_id, provider_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, patient_name, service, time, doctor, diagnose, file, status, created_at, updated_at, order_id, provider_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,6 +74,7 @@ abstract class BaseResultMedlatec extends GxActiveRecord {
 			'created_at' => Yii::t('app', 'Created At'),
 			'updated_at' => Yii::t('app', 'Updated At'),
 			'order_id' => Yii::t('app', 'Order'),
+			'provider_id' => Yii::t('app', 'Provider'),
 		);
 	}
 
@@ -90,6 +92,7 @@ abstract class BaseResultMedlatec extends GxActiveRecord {
 		$criteria->compare('created_at', $this->created_at);
 		$criteria->compare('updated_at', $this->updated_at);
 		$criteria->compare('order_id', $this->order_id);
+		$criteria->compare('provider_id', $this->provider_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

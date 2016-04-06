@@ -46,6 +46,7 @@ class ResultController extends Controller {
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
+        $criteria->condition = "provider_id = ".Yii::app()->session['provider_id'];
         $data = ResultMedlatec::model()->findAll($criteria);
         $returnArr = array();
         $service_name = null;
@@ -106,7 +107,8 @@ class ResultController extends Controller {
             $diagnose = StringHelper::filterString($_POST['diagnose']);
             $status = StringHelper::filterString($_POST['status']);
             $order_id = StringHelper::filterString($_POST['order_id']);
-            $attr = array('doctor' => $doctor, 'diagnose' => $diagnose, 'status' => $status, 'order_id' => $order_id);
+            $attr = array('doctor' => $doctor, 'diagnose' => $diagnose, 'status' => $status, 'order_id' => $order_id,
+                'provider_id' => Yii::app()->session['provider_id']);
             //  var_dump($_FILES); die;
             if (isset($_FILES['file'])) {
                 $urls = UploadHelper::getUrlUploadMultiImages($_FILES['file'], 'result');
