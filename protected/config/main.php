@@ -14,7 +14,8 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        'ext.giix-components.*'
+        'ext.giix-components.*',
+        'ext.YiiMailer.YiiMailer',
     //'ext.SimpleHTMLDOM',
     ),
     'modules' => array(
