@@ -15,6 +15,9 @@
                                 <td>Dịch vụ</td>
                                 <td>Thời gian</td>
 <!--                                <td>Yêu cầu</td>-->
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo vào</td>
                                 <td>Trạng thái</td>
                                 <td>Hành động</td>
@@ -29,6 +32,9 @@
                                 <td>Dịch vụ</td>
                                 <td>Thời gian</td>
 <!--                                <td>Yêu cầu</td>-->
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo vào</td>
                                 <td>Trạng thái</td>
                                 <td>Hành động</td>
@@ -74,6 +80,9 @@
                 {data: 'service', name: 'phone'},
                 {data: 'time', name: 'email'},
                 //  {data: 'requirement', name: 'requirement'},
+                 <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    {data: 'provider_name', name: 'provider_name'},
+                                <?php endif; ?>
                 {data: 'created_at', name: 'created_at'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action'},

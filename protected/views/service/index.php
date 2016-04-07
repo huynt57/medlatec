@@ -14,6 +14,9 @@
                                 <td>Tên dịch vụ</td>
                                 <td>Giá dịch vụ</td>
                                 <td>Khuyến mãi</td>
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo lúc</td>
                                 <td>Cập nhật lúc</td>
                                 <td>Trạng thái</td>
@@ -26,6 +29,9 @@
                                 <td>Tên dịch vụ</td>
                                 <td>Giá dịch vụ</td>
                                 <td>Khuyến mãi</td>
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo lúc</td>
                                 <td>Cập nhật lúc</td>
                                 <td>Trạng thái</td>
@@ -109,30 +115,31 @@
 <script>
     $(document).ready(function () {
         $('#service_management').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
+        "processing": true,
+                "serverSide": true,
+                "ajax": {
                 "url": "<?php echo Yii::app()->createUrl('service/getAllService') ?>",
-                "type": "GET"
-            },
-            "order": [[0, "desc"]],
-            "columns": [
+                        "type": "GET"
+                },
+                "order": [[0, "desc"]],
+                "columns": [
                 {data: 'id', name: 'id'},
                 {data: 'service_name', name: 'service_name'},
                 {data: 'service_price', name: 'service_price'},
                 {data: 'favorable', name: 'favorable'},
+<?php if (empty(Yii::app()->session['provider_id'])): ?>
+                    {data: 'provider_name', name: 'provider_name'},
+<?php endif; ?>
                 {data: 'created_at', name: 'created_at'},
                 {data: 'updated_at', name: 'updated_at'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action'},
-            ]
-        });
+                ]
     });
-
-</script>
+    });</script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+            $(document).ready(function () {
         $('#edit-service-modal').on('hidden.bs.modal', function () {
             $('#service_management').DataTable().ajax.reload();
         });

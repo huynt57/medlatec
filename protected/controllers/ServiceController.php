@@ -44,11 +44,14 @@ class ServiceController extends Controller {
             $criteria->addSearchCondition("description", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
+        if(!empty(Yii::app()->session['provider_id'])) {
+        $criteria->condition = "provider_id = " . Yii::app()->session['provider_id'];
+        }
         $count = ServiceMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $criteria->condition = "provider_id = " . Yii::app()->session['provider_id'];
+
         $data = ServiceMedlatec::model()->findAll($criteria);
         $returnArr = array();
         foreach ($data as $item) {
@@ -61,6 +64,10 @@ class ServiceController extends Controller {
             $itemArr['status'] = Util::getStatusLabel($item->status);
             $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['updated_at'] = Date('d-m-Y', $item->updated_at);
+            if(empty(Yii::app()->session['provider_id']))
+            {
+                $itemArr['provider_name'] = Provider::model()->getProviderName($item->provider_id);
+            }
             $edit_url = Yii::app()->createUrl('service/edit', array('service_id' => $item->id));
             $action = '<a data-toggle="modal" href="' . $edit_url . '" data-target="#edit-service-modal" onclick=loadInfoService(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
 

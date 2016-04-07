@@ -44,11 +44,17 @@ class OrderMedController extends Controller {
             $where = true;
         }
         //echo $order;
+        if (!empty(Yii::app()->session['provider_id'])) {
+            $criteria->condition = "status >= 1 AND provider_id = " . Yii::app()->session['provider_id'];
+        } else {
+            $criteria->condition = "status >= 1";
+        }
+
         $count = OrderMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
         $criteria->order = "$columns[$column] $order";
-        $criteria->condition = "status >= 1 AND provider_id = " . Yii::app()->session['provider_id'];
+
         // var_dump($start); die;
         $data = OrderMedlatec::model()->findAll($criteria);
         $returnArr = array();
@@ -63,6 +69,10 @@ class OrderMedController extends Controller {
             $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
             $itemArr['status'] = $item->status;
             $itemArr['status_name'] = Util::getStatusLabel($item->status);
+            if(empty(Yii::app()->session['provider_id']))
+            {
+                $itemArr['provider_name'] = Provider::model()->getProviderName($item->provider_id);
+            }
             //    $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
             //  $result_url = Yii::app()->createUrl('order/result', array('oid' => $item->id));
             $action = '<a data-toggle="modal" data-target="#edit-order-modal" onclick=loadInfo(' . $item->id . ')><span class="label label-primary">Sửa</span></a>';
