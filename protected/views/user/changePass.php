@@ -21,7 +21,7 @@
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Đổi mật khẩu</p>
-            <form action="<?php echo Yii::app()->createUrl('user/changePasswordProcess') ?>" method="post">
+            <form action="<?php echo Yii::app()->createUrl('user/processChangePass') ?>" method="post">
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" placeholder="Email" name="email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -31,10 +31,17 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Mật khẩu mới" name="new_password">
+                    <input type="password" class="form-control" placeholder="Mật khẩu" name="new_password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
+                    <!--                    <div class="col-xs-8">
+                                            <div class="checkbox icheck">
+                                                <label>
+                                                    <input type="checkbox"> Remember Me
+                                                </label>
+                                            </div>
+                                        </div> /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
                     </div><!-- /.col -->

@@ -51,6 +51,10 @@ class UserController extends Controller {
         Yii::app()->session->destroy();
         $this->redirect(Yii::app()->createUrl('user/login'));
     }
+    
+    public function actionChangePassword() {
+        $this->render('changePass');
+    }
 
     // Uncomment the following methods and override them if needed
     /*
