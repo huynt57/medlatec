@@ -19,6 +19,9 @@
                                 <td>Số điện thoại</td>
                                 <td>Email</td>
 <!--                                <td>Yêu cầu</td>-->
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo vào</td>
                                 <td>Trạng thái</td>
                                 <td>Hành động</td>
@@ -33,6 +36,9 @@
                                 <td>Số điện thoại</td>
                                 <td>Email</td>
 <!--                                <td>Yêu cầu</td>-->
+                                <?php if (empty(Yii::app()->session['provider_id'])): ?>
+                                    <td>Đơn vị</td>
+                                <?php endif; ?>
                                 <td>Tạo vào</td>
                                 <td>Trạng thái</td>
                                 <td>Hành động</td>
@@ -73,41 +79,42 @@
 <script>
     $(document).ready(function () {
         $('#order_management').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
+        "processing": true,
+                "serverSide": true,
+                "ajax": {
                 "url": "<?php echo Yii::app()->createUrl('order/getAllOrder') ?>",
-                "type": "GET"
-            },
-            "order": [[0, "desc"]],
-            "columns": [
+                        "type": "GET"
+                },
+                "order": [[0, "desc"]],
+                "columns": [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'phone', name: 'phone'},
                 {data: 'email', name: 'email'},
-                //  {data: 'requirement', name: 'requirement'},
+                        //  {data: 'requirement', name: 'requirement'},
+<?php if (empty(Yii::app()->session['provider_id'])): ?>
+                    {data: 'provider_name', name: 'provider_name'},
+<?php endif; ?>
                 {data: 'created_at', name: 'created_at'},
                 {data: 'status_name', name: 'status_name'},
                 {data: 'action', name: 'action'},
 //                {data: 'created_at', name: 'created_at'},
 //                {data: 'updated_at', name: 'updated_at'}
-            ]
-        });
-        $('#edit-order-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().ajax.reload();
-        });
-        $('#delete-order-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().ajax.reload();
-        });
-        $('#edit-order-result-modal').on('hidden.bs.modal', function () {
-            $('#order_management').DataTable().ajax.reload();
-        });
+                ]
     });
-
-</script>
+    $('#edit-order-modal').on('hidden.bs.modal', function () {
+        $('#order_management').DataTable().ajax.reload();
+    });
+    $('#delete-order-modal').on('hidden.bs.modal', function () {
+        $('#order_management').DataTable().ajax.reload();
+    });
+    $('#edit-order-result-modal').on('hidden.bs.modal', function () {
+        $('#order_management').DataTable().ajax.reload();
+    });
+    });</script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+            $(document).ready(function () {
 
         $(document).on('click', '#edit-order-submit', function () {
             var form = $('#form-edit-order');

@@ -34,6 +34,7 @@ class ServiceMedlatec extends BaseServiceMedlatec {
     public function addService($attr) {
         $model = new ServiceMedlatec;
         $model->setAttributes($attr);
+        $model->provider_id = Yii::app()->session['provider_id'];
         $model->updated_at = time();
         $model->created_at = time();
         if ($attr['type'] == 'meboo_admin') {

@@ -35,6 +35,7 @@ class ResultController extends Controller {
         $order = $_REQUEST['order'][0]['dir'];
         $where = null;
         $criteria = new CDbCriteria;
+        $criteria->order = "$columns[$column] $order";
         if (!empty($_REQUEST['search']['value'])) {
             $criteria->addSearchCondition("patient_name", $_REQUEST['search']['value'], 'true', 'OR');
             $criteria->addSearchCondition("service", $_REQUEST['search']['value'], 'true', 'OR');
@@ -42,10 +43,14 @@ class ResultController extends Controller {
             $criteria->addSearchCondition("status", $_REQUEST['search']['value'], 'true', 'OR');
             $where = true;
         }
+        if (!empty(Yii::app()->session['provider_id'])) {
+            $criteria->condition = "status >= 1 AND provider_id = " . Yii::app()->session['provider_id'];
+        }
         $count = ResultMedlatec::model()->count($criteria);
         $criteria->limit = $length;
         $criteria->offset = $start;
-        $criteria->order = "$columns[$column] $order";
+
+        //  $criteria->condition = "provider_id = " . Yii::app()->session['provider_id'];
         $data = ResultMedlatec::model()->findAll($criteria);
         $returnArr = array();
         $service_name = null;
@@ -66,6 +71,9 @@ class ResultController extends Controller {
             $itemArr['time'] = Date('d-m-Y', $item->time);
             $itemArr['status'] = Util::getStatusLabel($item->status);
             $itemArr['created_at'] = Date('d-m-Y', $item->created_at);
+            if (empty(Yii::app()->session['provider_id'])) {
+                $itemArr['provider_name'] = Provider::model()->getProviderName($item->provider_id);
+            }
             $edit_url = Yii::app()->createUrl('result/edit', array('result_id' => $item->id));
             ;
             $order_url = Yii::app()->createUrl('result/order', array('oid' => $item->order_id));
@@ -94,7 +102,9 @@ class ResultController extends Controller {
     public function actionAdd() {
         $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
         $this->layout = 'main_modal';
-        $orders = OrderMedlatec::model()->findAll();
+        $criteria = new CDbCriteria;
+        $criteria->condition = "provider_id = " . Yii::app()->session['provider_id'];
+        $orders = OrderMedlatec::model()->findAll($criteria);
         $this->render('add', array('orders' => $orders));
     }
 
@@ -106,7 +116,8 @@ class ResultController extends Controller {
             $diagnose = StringHelper::filterString($_POST['diagnose']);
             $status = StringHelper::filterString($_POST['status']);
             $order_id = StringHelper::filterString($_POST['order_id']);
-            $attr = array('doctor' => $doctor, 'diagnose' => $diagnose, 'status' => $status, 'order_id' => $order_id);
+            $attr = array('doctor' => $doctor, 'diagnose' => $diagnose, 'status' => $status, 'order_id' => $order_id,
+                'provider_id' => Yii::app()->session['provider_id']);
             //  var_dump($_FILES); die;
             if (isset($_FILES['file'])) {
                 $urls = UploadHelper::getUrlUploadMultiImages($_FILES['file'], 'result');
