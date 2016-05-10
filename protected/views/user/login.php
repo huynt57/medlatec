@@ -17,7 +17,7 @@
             <?php endif; ?>
         </div>
         <div class="login-logo">
-            <b>Quản trị</b> Provider
+            <b>Quản trị</b> Đối tác
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Đăng nhập để bắt đầu phiên làm việc của bạn</p>
@@ -50,7 +50,7 @@
                             <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
                         </div> /.social-auth-links 
             
-                        <a href="#">I forgot my password</a><br>
+-->                        <a href="<?php echo Yii::app()->createUrl('user/changePass')?>">Đổi mật khẩu</a><br><!--
                         <a href="register.html" class="text-center">Register a new membership</a>-->
 
         </div><!-- /.login-box-body -->

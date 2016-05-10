@@ -40,6 +40,9 @@ class UserController extends Controller {
                     Yii::app()->session['type'] = 'provider_admin';
                     Yii::app()->session['provider_id'] = $provider->provider_id;
                     $this->redirect(Yii::app()->createUrl('orderMed/index'));
+                } else {
+                    Yii::app()->user->setFlash('error', 'Sai tên đăng nhập và mật khẩu');
+                    $this->redirect(Yii::app()->createUrl('user/login'));
                 }
             } else {
                 Yii::app()->user->setFlash('error', 'Sai tên đăng nhập và mật khẩu');
@@ -52,9 +55,40 @@ class UserController extends Controller {
         Yii::app()->session->destroy();
         $this->redirect(Yii::app()->createUrl('user/login'));
     }
-    
-    public function actionChangePassword() {
+
+    public function actionChangePass() {
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_no_header';
         $this->render('changePass');
+    }
+
+    public function actionProcessChangePass() {
+        $request = Yii::app()->request;
+        if (isset($_POST)) {
+            $email = StringHelper::filterString($request->getPost('email'));
+            $password = StringHelper::filterString($request->getPost('password'));
+            $new_password = StringHelper::filterString($request->getPost('new_password'));
+            if ($new_password == '') {
+                Yii::app()->user->setFlash('success', 'Mật khẩu mới không được để rỗng');
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            }
+            //  if(Provider::model()->findByAttributes())
+            $check = Provider::model()->findByAttributes(array('email' => $email));
+            if ($check) {
+                if (md5($password) == $check->password) {
+                    $check->password = md5($new_password);
+                    $check->save(FALSE);
+                    Yii::app()->user->setFlash('success', 'Đổi mật khẩu thành công, bạn vui lòng đăng nhập lại');
+                    $this->redirect(Yii::app()->createUrl('user/login'));
+                } else {
+                    Yii::app()->user->setFlash('error', 'Sai mật khẩu');
+                    $this->redirect(Yii::app()->createUrl('user/changePass'));
+                }
+            } else {
+                Yii::app()->user->setFlash('error', 'Tài khoản không tồn tại');
+                $this->redirect(Yii::app()->createUrl('user/changePass'));
+            }
+        }
     }
 
     public function actionListAllProviders() {
