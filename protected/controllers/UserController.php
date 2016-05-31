@@ -96,6 +96,31 @@ class UserController extends Controller {
         ResponseHelper::JsonReturnSuccess($providers, 'Success');
     }
 
+    public function actionRegisterProvider() {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        $request = Yii::app()->request;
+        try {
+            $name = $request->getPost('name');
+            $email = $request->getPost('email');
+            $phone = $request->getPost('phone');
+            $address = $request->getPost('address');
+            $provider = new Provider;
+            $provider->email = $email;
+            $provider->phone = $phone;
+            $provider->provider_name = $name;
+            $provider->provider_address = $address;
+            if ($provider->save(FALSE)) {
+                MailQueue::model()->add();
+                ResponseHelper::JsonReturnSuccess('', 'Success');
+            } else {
+                ResponseHelper::JsonReturnError('', 'Error');
+            }
+        } catch (Exception $ex) {
+            ResponseHelper::JsonReturnError($ex->getMessage(), 'Error');
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
