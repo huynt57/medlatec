@@ -21,6 +21,7 @@
  * @property string $image
  * @property integer $active
  * @property string $password
+ * @property string $token
  *
  */
 abstract class BaseProvider extends GxActiveRecord {
@@ -45,9 +46,9 @@ abstract class BaseProvider extends GxActiveRecord {
 		return array(
 			array('created_at, updated_at, active', 'numerical', 'integerOnly'=>true),
 			array('provider_name, email, phone, fax, image', 'length', 'max'=>255),
-			array('provider_address, provider_description, password', 'safe'),
-			array('provider_name, provider_address, created_at, updated_at, provider_description, email, phone, fax, image, active, password', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('provider_id, provider_name, provider_address, created_at, updated_at, provider_description, email, phone, fax, image, active, password', 'safe', 'on'=>'search'),
+			array('provider_address, provider_description, password, token', 'safe'),
+			array('provider_name, provider_address, created_at, updated_at, provider_description, email, phone, fax, image, active, password, token', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('provider_id, provider_name, provider_address, created_at, updated_at, provider_description, email, phone, fax, image, active, password, token', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,6 +76,7 @@ abstract class BaseProvider extends GxActiveRecord {
 			'image' => Yii::t('app', 'Image'),
 			'active' => Yii::t('app', 'Active'),
 			'password' => Yii::t('app', 'Password'),
+			'token' => Yii::t('app', 'Token'),
 		);
 	}
 
@@ -93,6 +95,7 @@ abstract class BaseProvider extends GxActiveRecord {
 		$criteria->compare('image', $this->image, true);
 		$criteria->compare('active', $this->active);
 		$criteria->compare('password', $this->password, true);
+		$criteria->compare('token', $this->token, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

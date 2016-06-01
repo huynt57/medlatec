@@ -110,11 +110,50 @@ class UserController extends Controller {
             $provider->phone = $phone;
             $provider->provider_name = $name;
             $provider->provider_address = $address;
+            $token = StringHelper::generateToken(5, 25);
+            $provider->token = $token;
             if ($provider->save(FALSE)) {
-                MailQueue::model()->add();
+                $subject = 'Kích hoạt tài khoản provider Meboo của bạn';
+                $to_email = $email;
+                $from_email = 'hotro@meboo.vn';
+                $from_name = 'Hỗ trợ Meboo';
+                $message = 'Bấm vào đây để kích hoạt tài khoản Provider Meboo của bạn: http://doitac.meboo.vn/user/activate?token=' . $token;
+                MailQueue::model()->addMailQueue($message, $from_email, $from_name, $to_email, $subject);
                 ResponseHelper::JsonReturnSuccess('', 'Success');
             } else {
                 ResponseHelper::JsonReturnError('', 'Error');
+            }
+        } catch (Exception $ex) {
+            ResponseHelper::JsonReturnError($ex->getMessage(), 'Error');
+        }
+    }
+
+    public function actionActivate() {
+        $request = Yii::app()->request;
+        try {
+            $token = StringHelper::filterString($request->getQuery('token'));
+            if ($token != '') {
+                $check = User::model()->findByAttributes(array('token' => $token));
+                if ($check) {
+                    $password = StringHelper::generateRandomString(5);
+                    $check->token = '';
+                    $check->password = md5($password);
+                    $check->save('FALSE');
+                    $subject = 'Mật khẩu tài khoản provider Meboo của bạn';
+                    $to_email = $check->email;
+                    $from_email = 'hotro@meboo.vn';
+                    $from_name = 'Hỗ trợ Meboo';
+                    $message = 'Mật khẩu tài khoản Meboo Provider của bạn: ' . $password;
+                    MailQueue::model()->addMailQueue($message, $from_email, $from_name, $to_email, $subject);
+                    Yii::app()->user->setFlash('success', 'Vui lòng kiểm tra email để lấy mật khẩu đăng nhập');
+                    $this->redirect(Yii::app()->createUrl('user/login'));
+                } else {
+                    Yii::app()->user->setFlash('error', 'Token đã hết hạn !');
+                    $this->redirect(Yii::app()->createUrl('user/login'));
+                }
+            } else {
+                Yii::app()->user->setFlash('error', 'Token không tồn tại');
+                $this->redirect(Yii::app()->createUrl('user/login'));
             }
         } catch (Exception $ex) {
             ResponseHelper::JsonReturnError($ex->getMessage(), 'Error');
