@@ -133,7 +133,7 @@ class UserController extends Controller {
         try {
             $token = StringHelper::filterString($request->getQuery('token'));
             if ($token != '') {
-                $check = User::model()->findByAttributes(array('token' => $token));
+                $check = Provider::model()->findByAttributes(array('token' => $token));
                 if ($check) {
                     $password = StringHelper::generateRandomString(5);
                     $check->token = '';
@@ -145,6 +145,7 @@ class UserController extends Controller {
                     $from_name = 'Hỗ trợ Meboo';
                     $message = 'Mật khẩu tài khoản Meboo Provider của bạn: ' . $password;
                     MailQueue::model()->addMailQueue($message, $from_email, $from_name, $to_email, $subject);
+                    MailQueue::model()->addMailQueue('Có provider mới', $from_email, $from_name, 'huynt57@gmail.com', 'Có provider mới');
                     Yii::app()->user->setFlash('success', 'Vui lòng kiểm tra email để lấy mật khẩu đăng nhập');
                     $this->redirect(Yii::app()->createUrl('user/login'));
                 } else {
