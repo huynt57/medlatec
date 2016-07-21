@@ -161,6 +161,83 @@ class UserController extends Controller {
         }
     }
 
+    public function actionGetProvider() {
+        $columns = array(
+            0 => 'provider_id',
+            1 => 'provider_name',
+            2 => 'phone',
+            3 => 'email',
+            4 => 'provider_address',
+            5 => 'provider_image',
+            6 => 'created_at',
+            7 => 'active',
+            8 => 'action',
+        );
+        //  $request = Yii::app()->request;
+        $start = $_REQUEST['start'];
+        $length = $_REQUEST['length'];
+        $column = $_REQUEST['order'][0]['column'];
+        $order = $_REQUEST['order'][0]['dir'];
+        $where = null;
+        $criteria = new CDbCriteria;
+        if (!empty($_REQUEST['search']['value'])) {
+            $criteria->addSearchCondition("provider_name", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("phone", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("email", $_REQUEST['search']['value'], 'true', 'OR');
+            $criteria->addSearchCondition("provider_address", $_REQUEST['search']['value'], 'true', 'OR');
+            $where = true;
+        }
+        //echo $order;
+        $criteria->limit = $length;
+        $criteria->offset = $start;
+        $criteria->order = "$columns[$column] $order";
+        $criteria->condition = 'active = 1 AND provider_id = ' . Yii::app()->session['provider_id'];
+        // var_dump($start); die;
+        $data = OrderMedlatec::model()->findAll($criteria);
+        $returnArr = array();
+        foreach ($data as $item) {
+            $itemArr = array();
+            $itemArr['provider_id'] = $item->id;
+            $itemArr['provider_name'] = $item->name;
+            $itemArr['phone'] = $item->phone;
+            $itemArr['email'] = $item->email;
+            $itemArr['provider_address'] = $item->requirement;
+            $itemArr['provider_image'] = $item->requirement;
+            $itemArr['created_at'] = $item->created_at;
+            $itemArr['active'] = $item->status;
+            if (empty(Yii::app()->session['provider_id'])) {
+                $itemArr['provider_name'] = Provider::model()->getProviderName($item->provider_id);
+            }
+            //   $edit_url = Yii::app()->createUrl('order/edit', array('oid' => $item->id));
+            $action = '<a data-toggle="modal" data-target="#edit-provider-modal"><span class="label label-primary">Sửa</span></a>';
+            $action.='';
+            $itemArr['action'] = $action;
+            $returnArr[] = $itemArr;
+        }
+
+        echo json_encode(array('data' => $returnArr, "recordsTotal" => $count,
+            "recordsFiltered" => $count));
+    }
+    
+    public function actionEdit() {
+        $request = Yii::app()->request;
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'main_modal';
+        $order_id = StringHelper::filterString($request->getQuery('oid'));
+        $data = OrderMedlatec::model()->getOrderDetail($order_id);
+        $this->render('edit', array('data' => $data));
+    }
+
+    public function actionEditProcess() {
+        $attr = StringHelper::filterArrayString($_POST);
+        $result = OrderMedlatec::model()->updateOrder($attr);
+        if ($result) {
+            ResponseHelper::JsonReturnSuccess('', 'Update success');
+        } else {
+            ResponseHelper::JsonReturnError('', 'Update failed');
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
